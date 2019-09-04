@@ -1,0 +1,4 @@
+
+[submodule "Karttur2019GitHub/geoimagine/kartturmain"]
+	path = Karttur2019GitHub/geoimagine/kartturmain
+	url = https://github.com/karttur/geoimagine-kartturmain
