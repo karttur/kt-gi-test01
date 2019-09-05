@@ -2,3 +2,102 @@
 [submodule "Karttur2019GitHub/geoimagine/kartturmain"]
 	path = Karttur2019GitHub/geoimagine/kartturmain
 	url = https://github.com/karttur/geoimagine-kartturmain
+[submodule "Karttur2019GitHub/geoimagine/setup_db"]
+	path = Karttur2019GitHub/geoimagine/setup_db
+	url = https://github.com/karttur/geoimagine-setup_db
+[submodule "Karttur2019GitHub/geoimagine/dem"]
+	path = Karttur2019GitHub/geoimagine/dem
+	url = https://github.com/karttur/geoimagine-dem
+[submodule "Karttur2019GitHub/geoimagine/endmembers"]
+	path = Karttur2019GitHub/geoimagine/endmembers
+	url = https://github.com/karttur/geoimagine-endmembers
+[submodule "Karttur2019GitHub/geoimagine/export"]
+	path = Karttur2019GitHub/geoimagine/export
+	url = https://github.com/karttur/geoimagine-export
+[submodule "Karttur2019GitHub/geoimagine/extract"]
+	path = Karttur2019GitHub/geoimagine/extract
+	url = https://github.com/karttur/geoimagine-extract
+[submodule "Karttur2019GitHub/geoimagine/gis"]
+	path = Karttur2019GitHub/geoimagine/gis
+	url = https://github.com/karttur/geoimagine-gis
+[submodule "Karttur2019GitHub/geoimagine/grace"]
+	path = Karttur2019GitHub/geoimagine/grace
+	url = https://github.com/karttur/geoimagine-grace
+[submodule "Karttur2019GitHub/geoimagine/image"]
+	path = Karttur2019GitHub/geoimagine/image
+	url = https://github.com/karttur/geoimagine-image
+[submodule "Karttur2019GitHub/geoimagine/jekyllise"]
+	path = Karttur2019GitHub/geoimagine/jekyllise
+	url = https://github.com/karttur/geoimagine-jekyllise
+[submodule "Karttur2019GitHub/geoimagine/ktgraphics"]
+	path = Karttur2019GitHub/geoimagine/ktgraphics
+	url = https://github.com/karttur/geoimagine-ktgraphics
+[submodule "Karttur2019GitHub/geoimagine/ktnumba"]
+	path = Karttur2019GitHub/geoimagine/ktnumba
+	url = https://github.com/karttur/geoimagine-ktnumba
+[submodule "Karttur2019GitHub/geoimagine/ktpandas"]
+	path = Karttur2019GitHub/geoimagine/ktpandas
+	url = https://github.com/karttur/geoimagine-ktpandas
+[submodule "Karttur2019GitHub/geoimagine/landsat"]
+	path = Karttur2019GitHub/geoimagine/landsat
+	url = https://github.com/karttur/geoimagine-landsat
+[submodule "Karttur2019GitHub/geoimagine/layout"]
+	path = Karttur2019GitHub/geoimagine/layout
+	url = https://github.com/karttur/geoimagine-layout
+[submodule "Karttur2019GitHub/geoimagine/mask"]
+	path = Karttur2019GitHub/geoimagine/mask
+	url = https://github.com/karttur/geoimagine-mask
+[submodule "Karttur2019GitHub/geoimagine/modis"]
+	path = Karttur2019GitHub/geoimagine/modis
+	url = https://github.com/karttur/geoimagine-modis
+[submodule "Karttur2019GitHub/geoimagine/overlay"]
+	path = Karttur2019GitHub/geoimagine/overlay
+	url = https://github.com/karttur/geoimagine-overlay
+[submodule "Karttur2019GitHub/geoimagine/postgresdb"]
+	path = Karttur2019GitHub/geoimagine/postgresdb
+	url = https://github.com/karttur/geoimagine-postgresdb
+[submodule "Karttur2019GitHub/geoimagine/projects"]
+	path = Karttur2019GitHub/geoimagine/projects
+	url = https://github.com/karttur/geoimagine-projects
+[submodule "Karttur2019GitHub/geoimagine/region"]
+	path = Karttur2019GitHub/geoimagine/region
+	url = https://github.com/karttur/geoimagine-region
+[submodule "Karttur2019GitHub/geoimagine/scalar"]
+	path = Karttur2019GitHub/geoimagine/scalar
+	url = https://github.com/karttur/geoimagine-scalar
+[submodule "Karttur2019GitHub/geoimagine/sentinel"]
+	path = Karttur2019GitHub/geoimagine/sentinel
+	url = https://github.com/karttur/geoimagine-sentinel
+[submodule "Karttur2019GitHub/geoimagine/smap"]
+	path = Karttur2019GitHub/geoimagine/smap
+	url = https://github.com/karttur/geoimagine-smap
+[submodule "Karttur2019GitHub/geoimagine/soilmoisture"]
+	path = Karttur2019GitHub/geoimagine/soilmoisture
+	url = https://github.com/karttur/geoimagine-soilmoisture
+[submodule "Karttur2019GitHub/geoimagine/specials"]
+	path = Karttur2019GitHub/geoimagine/specials
+	url = https://github.com/karttur/geoimagine-specials
+[submodule "Karttur2019GitHub/geoimagine/support"]
+	path = Karttur2019GitHub/geoimagine/support
+	url = https://github.com/karttur/geoimagine-support
+[submodule "Karttur2019GitHub/geoimagine/timeseries"]
+	path = Karttur2019GitHub/geoimagine/timeseries
+	url = https://github.com/karttur/geoimagine-timeseries
+[submodule "Karttur2019GitHub/geoimagine/transform"]
+	path = Karttur2019GitHub/geoimagine/transform
+	url = https://github.com/karttur/geoimagine-transform
+[submodule "Karttur2019GitHub/geoimagine/updatedb"]
+	path = Karttur2019GitHub/geoimagine/updatedb
+	url = https://github.com/karttur/geoimagine-updatedb
+[submodule "Karttur2019GitHub/geoimagine/userproj"]
+	path = Karttur2019GitHub/geoimagine/userproj
+	url = https://github.com/karttur/geoimagine-userproj
+[submodule "Karttur2019GitHub/geoimagine/zipper"]
+	path = Karttur2019GitHub/geoimagine/zipper
+	url = https://github.com/karttur/geoimagine-zipper
+[submodule "Karttur2019GitHub/geoimagine/ancillary"]
+	path = Karttur2019GitHub/geoimagine/ancillary
+	url = https://github.com/karttur/geoimagine-ancillary
+[submodule "Karttur2019GitHub/geoimagine/gdalutilities"]
+	path = Karttur2019GitHub/geoimagine/gdalutilities
+	url = https://github.com/karttur/geoimagine-gdalutilities
