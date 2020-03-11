@@ -1,0 +1,15 @@
+###### MDOIS #####
+
+#imports the shape file with the modis tile coords in lon lat format
+#NOTE YOU HAVE TO MAKE SURE THAT THE PATH GIVEN IS CORRECT
+ancillary-import-modistileslonlat.xml
+
+#Following the import link all default regions to modis tiles
+regions-modtiles_v80.xml
+
+#modis-search_data-pool.xml updates the search for MODIS available tiles in he data pool
+#You must have login credentials set and linked
+modis-search_data-pool.xml
+
+#modis-DataPool-search_todb.xml takes all html preloaded search results and adds them to the db
+modis-DataPool-search_todb.xml

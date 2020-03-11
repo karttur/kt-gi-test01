@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='utf-8'?>
+<organize>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' system = 'ancillary'></userproj>
+	<period startyear = "2014" endyear = "2014" timestep='singleyear'></period>
+
+	<process processid ='organizeancillary'>
+		<parameters importdef='shp'
+			epsg = '4326'
+			instid = 'karttur'
+			dsname = 'globalROI'
+			source = 'karttur'
+			dsversion = "1.0"
+			accessdate = "20170320"
+			regionid = 'globe'
+			regioncat = 'globe'
+			datadir ='worldclim'
+			datafile=''
+			metapath =""
+			dataurl = ""
+			metaurl=""
+			title = "Global default regions"
+			label = "Global default regions based on countries and continents"
+			replacestr = ''
+			replacetag = ''
+		> </parameters>
+
+		<srcpath volume = "None" hdrfiletype = "shp" datfiletype = ""></srcpath>
+		<dstpath volume = 'africa' hdrfiletype = "shp" datfiletype = ""></dstpath>
+
+		<srcraw id='country'
+			datadir ='data'
+			datafile = "countries_karttur_global_2014"
+			datalayer = "countries"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			<country masked='Y'  measure = "N" source = "karttur" product = "karttur"
+			     folder = 'defaultregions' band = "country" prefix = "country" suffix = "0"
+			     scalefac = "1" offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</country>
+		</dstcomp>
+
+
+		<srcraw id='country-continent'
+			datadir ='data'
+			datafile = "countries-continents_karttur_global_2014"
+			datalayer = "countries-continents"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			<country-continent masked='Y' measure = "N" source = "karttur" product = "karttur"
+					   folder = 'defaultregions' band = "country-continent"
+					   prefix = "country-continent" suffix = "0" scalefac = "1"
+					   offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</country-continent>
+		</dstcomp>
+
+		<srcraw id ='continent-subregions'
+			datadir ='data'
+			datafile = "continent-subregions_karttur_global_2014"
+			datalayer = "continent-subregions"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			 <continent-subregions masked='Y' measure = "N" source = "karttur" product = "karttur"
+					       folder = 'defaultregions' band = "continent-subregions"
+					       prefix = "continent-subregions" suffix = "0" scalefac = "1"
+					       offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</continent-subregions>
+		</dstcomp>
+		
+		<srcraw id='continents'
+			datadir ='data'
+			datafile = "continents_karttur_global_2014"
+			datalayer = "continents"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			<continents masked='Y' measure = "N" source = "karttur" product = "karttur"  folder = 'defaultregions'
+			 band = "continents" prefix = "continents" suffix = "0" scalefac = "1"
+			 offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</continents>
+		</dstcomp>
+
+		<srcraw id='marine-countries'
+			datadir ='data'
+			datafile = "marine-countries_karttur_2014"
+			datalayer = "marine-countries"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+
+			<marine-countries masked='Y' measure = "N" source = "karttur" product = "karttur"  folder = 'defaultregions'
+			 band = "marine-countries" prefix = "marine-countries" suffix = "0"
+			 scalefac = "1" offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</marine-countries>
+
+		</dstcomp>
+
+		<srcraw id='marine-continent-countries'
+			datadir ='data'
+			datafile = "marine-continent-countries_karttur_2014"
+			datalayer = "marine-continent-countries"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			 <marine-continent-countries masked='Y' measure = "N" source = "karttur" product = "karttur"
+						     folder = 'defaultregions' band = "marine-continent-countries"
+						     prefix = "marine-continent-countries" suffix = "0" scalefac = "1"
+						     offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</marine-continent-countries>
+		</dstcomp>
+
+		<srcraw id="marine-continent-subregions"
+			datadir ='data'
+			datafile = "marine-continent-subregions_karttur_2014"
+			datalayer = "marine-continent-subregions"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+
+			<marine-continent-subregions masked='Y' measure = "N" source = "karttur" product = "karttur"
+			 folder = 'defaultregions' band = "marine-continent-subregions"
+			 prefix = "marine-continent-subregions" suffix = "0"
+			 scalefac = "1" offsetadd = "0" dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</marine-continent-subregions>
+		</dstcomp>
+
+		<srcraw id="marine-continents"
+			datadir ='data'
+			datafile = "marine-continents_karttur_2014"
+			datalayer = "marine-continents"
+			measure = "N"
+			dsversion = "2014"
+			accessdate = "20170403"
+			product = 'karttur'
+			theme = "roi"
+			subtheme = "defaultregion"
+			copyright = ""
+			dataurl = ""
+			metapath =""
+			metaurl=""
+			title = "Global countries (with iso-codes)"
+			label = "Cleaned vectors from ShareGeo representing global countries for 2014"
+		></srcraw>
+		<dstcomp>
+			<marine-continents masked='Y' measure = "N" source = "karttur" product = "karttur"
+			 folder = 'defaultregions' band = "marine-continents"
+			 prefix = "marine-continents" suffix = "0" scalefac = "1" offsetadd = "0"
+			 dataunit = "boundary" celltype = 'vector' cellnull = '-32768'>
+			</marine-continents>
+
+		</dstcomp>
+
+	</process>
+</organize>

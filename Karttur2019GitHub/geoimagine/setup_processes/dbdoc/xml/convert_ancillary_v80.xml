@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<!-- Add rootprocid Periodicity -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Convert'>
+			<title>Processes for converting and translating data</title>
+			<label>Aggregation of temporal data, reprojecting and format translation of spatial data etc</label>
+		</parameters>
+	</process>
+
+	
+
+
+			<!-- Add subprocid translate (Convert) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Convert' subprocid = 'warp' version ='0.8.0'  minuserstratum = '10'>
+			<title>Spatial data projection warping</title>
+			<label>The warp process is an interface to gdalwarp</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 't_srs' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '4326' ></parameter>
+			<parameter paramid = 'dst_region' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'ulx' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'uly' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'lrx' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'lry' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'xsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'ysize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'xres' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'yres' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'resampling' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'nearest' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+
+	</process>
+</manageprocess>

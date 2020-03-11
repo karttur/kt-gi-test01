@@ -1,0 +1,1912 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+
+	<!-- Add rootprocid TimeSeries -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries'>
+			<title>Timeseries analysis</title>
+			<label>Timeseries analysis</label>
+		</parameters>
+	</process>
+
+		<!-- Add subprocid tsresample (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'tsresample' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample time series to other interval</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'group' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'avg' ></parameter>
+		</node>
+		<node parent = 'process' element = 'tarperiod'>
+			<parameter paramid = 'startyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1900' ></parameter>
+			<parameter paramid = 'endyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2100' ></parameter>
+			<parameter paramid = 'startmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' ></parameter>
+			<parameter paramid = 'endmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'startday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' ></parameter>
+			<parameter paramid = 'endday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '31' ></parameter>
+			<parameter paramid = 'seasonstartmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonendmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonstartday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonendday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'addons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'maxdaysaddons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstband'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'dst' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subprocid hydrotrends (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'hydrotrends' version ='0.8.0'  minuserstratum = '1'>
+			<title>Decompose time series data to statistical trends and seasonality layers</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'residual' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'seasonal' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'seasonaltrend' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'detrended' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'trend+season' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'pvalue' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.05' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstband'>
+			<parameter paramid = 'bandid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+		</node>
+		<nodex element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tsdecomp' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Int16' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+		</nodex>
+	</processx>
+
+	<!-- Add subprocid autocorrelateancillary (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'autocorrelateancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Ancillary time-series autocorrelation, outputs as many bands as maximum lags set (nlags) in the paramters</title>
+		</parameters>
+		
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'nlags' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'partial' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'resampleseasonal' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'mirror' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'autocorr' ></parameter>
+
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid correlatelag (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'correlatelag' version ='0.8.0'  minuserstratum = '1'>
+			<title>Time-series correlation for lag</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<!-- spatialforce set to True for layers with force data, False for 1D vetctors with temporal force data
+			The affected paramter is the srccomp, and it must always be spatial -->
+			<parameter paramid = 'spatialforce' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'dst' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcforce'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+		</node>
+	</processx>
+
+	<!-- Add subprocid acfboxwhisker (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'acfboxwhisker' version ='0.8.0'  minuserstratum = '1'>
+			<title>Time-series correlation for lag</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'nlags' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'ymin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'ymax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'singlehemisphere' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+		</node>
+
+	</processx>
+
+	<!-- Add subprocid timeseriesgraph (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'timeseriesgraph' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'input' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'force' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+	</processx>
+
+	<!-- Add subprocid timeseriesindexgraph (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'seasonaltrendcorrgraph' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'decompose' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trend' >
+			naivetrend (nt)
+			naivedetrended (nd)
+			seasonaltrend (st)
+			seasonalcyclic (sc)
+			seasonaldetrend (sd)
+			</parameter>
+			<parameter paramid = 'splineseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'periodfactor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '5' ></parameter>
+			<parameter paramid = 'invert' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</processx>
+
+	<!-- Add subprocid old: seasonaltrendcorr new: trendtsancillary (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'trendtsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trendts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'periodfactor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '4' ></parameter>
+			<parameter paramid = 'decompose' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trend' >
+			trend
+			cyclic
+			detrend
+			</parameter>
+
+			<parameter paramid = 'splineseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameterx paramid = 'indexcomp' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameterx>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'stats'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+	
+	<!-- Add subprocid old: seasonaltrendcorr new: trendtsmodis (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'trendtsmodis' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trendts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'periodfactor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '4' ></parameter>
+			<parameter paramid = 'decompose' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trend' >
+			trend
+			cyclic
+			detrend
+			</parameter>
+
+			<parameter paramid = 'splineseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameterx paramid = 'indexcomp' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameterx>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'stats'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid: decomposetsancillary  (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'decomposetsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Decompose ancillary timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'decomposets' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			 
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subprocid old: seasonaltrendcorr new: indexcrosstrendtsancillary (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeries' subprocid = 'indexcrosstrendtsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'indexcrosstrend' ></parameter>
+
+			<parameter paramid = 'mirrorlag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'maxlag' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '6' ></parameter>
+
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'abs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrossobserved' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosstendency' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossresidual' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'xcrosspearson' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosslag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+
+			<!--
+
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'indexcrosstrend' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'periodfactor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'decompose' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'trend' >
+			naive
+			seasonal
+			</parameter>
+
+			<parameter paramid = 'splineseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameterx paramid = 'indexcomp' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameterx>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrosseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosslongtrend' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosstrend' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossresidual' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossdetrended' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrosspearson' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrossmax' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosslag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			-->
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'stats'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- Add subprocid indexcrosstrendtsmodis (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeries' subprocid = 'indexcrosstrendtsmodis' version ='0.8.0'  minuserstratum = '1'>
+			<title>Cross correlation between index and image time series</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+		
+			<!-- From graph -->
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'indexcrosstrend' ></parameter>
+
+			<parameter paramid = 'mirrorlag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'maxlag' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '6' ></parameter>
+
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'abs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrossobserved' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosstendency' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossresidual' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'xcrosspearson' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosslag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'stats'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- Add subprocid imagecrosstrendtsmodis (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeries' subprocid = 'imagecrosstrendtsmodis' version ='0.8.0'  minuserstratum = '1'>
+			<title>Cross correlation between index and image time series</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+		
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'imagecrosstrend' ></parameter>
+			<parameter paramid = 'mirrorlag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'maxlag' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '6' ></parameter>
+			<parameter paramid = 'savelags' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-1' ></parameter>
+
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'abs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrossobserved' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosstendency' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossresidual' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'xcrosspearson' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosslag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>	
+			<parameter paramid = 'master' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'master' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'master'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'master' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'master' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>	
+			<parameter paramid = 'slave' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'slave' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'slave'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'slave' ></parameter>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'slave' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xcorr' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'noeffect' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'auto' ></parameter>
+			<!-- Other dst comp parameters are forced in the program and can not be set-->
+		</node>
+
+	</process>
+
+	<!-- Add subprocid extractseason (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractseason' version ='0.8.0'  minuserstratum = '1'>
+			<title>Extract seasonal data from timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonalts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid extractseasonModisSingleTile (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractseasonModisSingleTile' version ='0.8.0'  minuserstratum = '1'>
+			<title>Extract seasonal data from timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonalts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'htile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'vtile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid extractseasonModisRegion (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractseasonModisRegion' version ='0.8.0'  minuserstratum = '1'>
+			<title>Extract seasonal data from timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonalts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>	
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid extractseason (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractseasonancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Extract seasonal data from timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonalts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid extractseason (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractseasonsmap' version ='0.8.0'  minuserstratum = '1'>
+			<title>Extract seasonal data from smap timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonalts' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid resampletsancillary (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'resampletsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample ancillary timeseries data</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'resamplets' ></parameter>
+			<parameter paramid = 'targettimestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'avg' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-2222' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid resampletssmap (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'resampletssmap' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample smap timeseries data</title>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'resamplets' ></parameter>
+			<parameter paramid = 'targettimestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'startstep' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'avg' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-2222' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid resampletsModisSingleTile (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'resampletsModisSingleTile' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample modis timeseries data</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'resamplets' ></parameter>
+			<parameter paramid = 'targettimestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'startstep' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'htile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'vtile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'avg' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-2222' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid resampletsModisRegion (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'resampletsModisRegion' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample MODIS timeseries data</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'resamplets' ></parameter>
+			<parameter paramid = 'targettimestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'startstep' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'avg' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-2222' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid resampletsmodis (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'resampletsmodis' version ='0.8.0'  minuserstratum = '1'>
+			<title>Resample ancillary timeseries data</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'resamplets' ></parameter>
+			<parameter paramid = 'targettimestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'avg' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-2222' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid extractminmax (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'extractminmax' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'min' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'max' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid mendtimeseries (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>N</overwrite>
+		<delete>Y</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'mendtsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Mend timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'interpolate' ></parameter>
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid mendancillarytimeseries (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'mendancillarytimeseries' version ='0.8.0'  minuserstratum = '1'>
+			<title>Mend timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1to1' ></parameter>
+
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'interpolate' ></parameter>
+			<parameter paramid = 'validfraction' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid Average3timeseries (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'average3ancillarytimeseries' version ='0.8.0'  minuserstratum = '1'>
+			<title>Average 3 ancillary timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'compid' ></parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'average' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'seasonal' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonal' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'seasonal'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'seasonal' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'layer3' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'layer3' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'layer3'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'layer3' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = '**' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '**' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '**'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '**' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'src' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid seasonfilltsModisSingleTile (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'seasonfilltsModisSingleTile' version ='0.8.0'  minuserstratum = '1'>
+			<title>Season fill timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'interpolate' ></parameter>
+			<parameter paramid = 'denominator' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.8' ></parameter>
+			<parameter paramid = 'divisor' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.0' ></parameter>
+			<parameter paramid = 'power' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '3.0' ></parameter>
+
+			<parameter paramid = 'htile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'vtile' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonfillts' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid seasonfilltsModisRegion (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'seasonfilltsModisRegion' version ='0.8.0'  minuserstratum = '1'>
+			<title>Season fill timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'interpolate' ></parameter>
+			<parameter paramid = 'denominator' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.8' ></parameter>
+			<parameter paramid = 'divisor' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.0' ></parameter>
+			<parameter paramid = 'power' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '3.0' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonfillts' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid setAssimilationModisRegion (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'setAssimilationModisRegion' version ='0.8.0'  minuserstratum = '1'>
+			<title>Season fill timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'wrap' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'maxthreshold' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'minthreshold' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'setassimilation' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid asimilateModisRegion (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'assimilateModisRegion' version ='0.8.0'  minuserstratum = '1'>
+			<title>Season fill timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'maxthreshold' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'minthreshold' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'assimfrac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dstmin' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dstmax' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '100' ></parameter>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'assimilate' ></parameter>
+			<parameter paramid = 'assimsuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'dstsuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'acceptdualresol' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	
+	
+	<!-- Add subprocid seasonfilltsSmap (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'seasonfilltsSmap' version ='0.8.0'  minuserstratum = '1'>
+			<title>Season fill timeseries</title>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'interpolate' ></parameter>
+			<parameter paramid = 'denominator' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.8' ></parameter>
+			<parameter paramid = 'divisor' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.0' ></parameter>
+			<parameter paramid = 'power' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '3.0' ></parameter>
+
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonfillts' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+		<!-- Add subprocid seasonaltrendcorr (TimeSeries) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'z-score' version ='0.8.0'  minuserstratum = '1'>
+			<title>Calculate z-score</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstband'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subprocid tsindexgraph (TimeSeries) -->
+	<processx processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'tsindexgraph' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+	</processx>
+	
+	<!-- signiftrends moved to overlay-->
+	<process processid ='addsubproc'>
+		<overwrite>N</overwrite>
+		<delete>Y</delete>
+		<parameters rootprocid ='TimeSeries' subprocid = 'signiftrendsancillary' version ='0.8.0'  minuserstratum = '7'>
+			<title>Significant trends</title>
+			<label>Significant trends</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'signiftrend' ></parameter>
+			<parameter paramid = 'basename' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'threshold' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '1.96' ></parameter>
+			<parameter paramid = 'neg' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'pos' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'onlysignif' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'timeseries' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'timeseries' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'timeseries'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'significance' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'timeseries' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'seasonal' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'seasonal' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'seasonal'>
+		<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'slope' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'seasonal' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+
+			<parameter paramid = 'layer3' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'layer3' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = 'layer3'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'intercept' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'layer3' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+
+	</process>
+	
+</manageprocess>

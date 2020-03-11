@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<!-- Add rootprocid ManageRegion -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='VectorProcess'>	
+			<title>Manage vector processing</title>
+			<label>Manage vector processing</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid regioncategories (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='VectorProcess' subprocid = 'clipvectortoregion' version ='0.8.0'  minuserstratum = '10'>
+			<title>Clip input vector to fit region</title>
+			<label>Clip input vector to fit region</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'vectorregion' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'globe' ></parameter>	
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+</manageprocess>	

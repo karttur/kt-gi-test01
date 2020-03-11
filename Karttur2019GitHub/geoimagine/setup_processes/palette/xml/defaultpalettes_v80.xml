@@ -1,0 +1,376 @@
+<?xml version='1.0' encoding='utf-8'?>
+<palette>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+
+	<!-- addrasterpalette preciplinear-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'preciplinear' compid='test'>
+			<setcolor id = '0' red = '215' green ='76' blue='56' alpha ='0' label='0' hint='0' ></setcolor>
+			<setcolor id = '25' red = '241' green ='115' blue='46' alpha ='0' label='25' hint='NA' ></setcolor>
+			<setcolor id = '50' red = '255' green ='170' blue='51' alpha ='0' label='50' hint='50' ></setcolor>
+			<setcolor id = '75' red = '255' green ='222' blue='66' alpha ='0' label='75' hint='NA' ></setcolor>
+			<setcolor id = '100' red = '210' green ='251' blue='75' alpha ='0' label='100' hint='100' ></setcolor>
+			<setcolor id = '125' red = '138' green ='253' blue='75' alpha ='0' label='125' hint='NA' ></setcolor>
+			<setcolor id = '150' red = '90' green ='220' blue='90' alpha ='0' label='150' hint='150' ></setcolor>
+			<setcolor id = '175' red = '30' green ='177' blue='125' alpha ='0' label='150' hint='NA' ></setcolor>
+			<setcolor id = '200' red = '10' green ='120' blue='165' alpha ='0' label='175' hint='200' ></setcolor>
+			<setcolor id = '225' red = '0' green ='79' blue='140' alpha ='0' label='200' hint='NA' ></setcolor>
+			<setcolor id = '250' red = '0' green ='43' blue='117' alpha ='0' label='200' hint='250' ></setcolor>
+			<setcolor id = '253' red = '240' green ='240' blue='132' alpha ='0' label='dry (0)' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette precipln-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'precipln' compid='test'>
+			<setcolor id = '0' red = '215' green ='76' blue='56' alpha ='0' label='0' hint='0' ></setcolor>
+			<setcolor id = '8' red = '241' green ='115' blue='46' alpha ='0' label='8' hint='NA' ></setcolor>
+			<setcolor id = '13' red = '255' green ='170' blue='51' alpha ='0' label='13' hint='NA' ></setcolor>
+			<setcolor id = '20' red = '255' green ='222' blue='66' alpha ='0' label='20' hint='NA' ></setcolor>
+			<setcolor id = '31' red = '210' green ='251' blue='75' alpha ='0' label='31' hint='31' ></setcolor>
+			<setcolor id = '49' red = '138' green ='253' blue='75' alpha ='0' label='49' hint='NA' ></setcolor>
+			<setcolor id = '76' red = '90' green ='220' blue='90' alpha ='0' label='76' hint='76' ></setcolor>
+			<setcolor id = '120' red = '30' green ='177' blue='125' alpha ='0' label='120' hint='120' ></setcolor>
+			<setcolor id = '188' red = '0' green ='90' blue='150' alpha ='0' label='188' hint='188' ></setcolor>
+			<setcolor id = '250' red = '0' green ='43' blue='117' alpha ='0' label='250' hint='250' ></setcolor>
+			<setcolor id = '253' red = '240' green ='240' blue='132' alpha ='0' label='dry (0)' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette precipdelta-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'precipdelta' compid='test'>
+			<setcolor id = '0' red = '215' green ='76' blue='56' alpha ='0' label='auto' hint='%(d)s' ></setcolor>
+			<setcolor id = '63' red = '255' green ='170' blue='51' alpha ='0' label='auto' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '224' green ='224' blue='224' alpha ='0' label='auto' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '30' green ='177' blue='125' alpha ='0' label='auto' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '0' green ='43' blue='117' alpha ='0' label='auto' hint='%(d)s' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='253' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='No data' hint='NA' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette preciplinearstd-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'preciplinearstd' compid='test'>
+			<setcolor id = '0' red = '224' green ='224' blue='224' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '83' red = '210' green ='251' blue='75' alpha ='0' label='83' hint='%(d)s' ></setcolor>
+			<setcolor id = '167' red = '30' green ='177' blue='125' alpha ='0' label='167' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '0' green ='43' blue='117' alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='253' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette preciplnstd-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'preciplnstd' compid='test'>
+			<setcolor id = '0' red = '224' green ='224' blue='224' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '8' red = '241' green ='115' blue='46' alpha ='0' label='25' hint='NA' ></setcolor>
+			<setcolor id = '13' red = '255' green ='170' blue='51' alpha ='0' label='50' hint='NA' ></setcolor>
+			<setcolor id = '20' red = '255' green ='222' blue='66' alpha ='0' label='20' hint='NA' ></setcolor>
+			<setcolor id = '31' red = '210' green ='251' blue='75' alpha ='0' label='31' hint='31' ></setcolor>
+			<setcolor id = '49' red = '138' green ='253' blue='75' alpha ='0' label='49' hint='NA' ></setcolor>
+			<setcolor id = '76' red = '90' green ='220' blue='90' alpha ='0' label='76' hint='76' ></setcolor>
+			<setcolor id = '120' red = '30' green ='177' blue='125' alpha ='0' label='120' hint='120' ></setcolor>
+			<setcolor id = '188' red = '0' green ='90' blue='150' alpha ='0' label='188' hint='188' ></setcolor>
+			<setcolor id = '250' red = '0' green ='43' blue='117' alpha ='0' label='250' hint='250' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='253' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twi-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twi' compid='test'>
+			<setcolor id = '0' red = '255' green ='132' blue='94' alpha ='0' label='0' hint='0' ></setcolor>
+			<setcolor id = '25' red = '240' green ='224' blue='148' alpha ='0' label='10' hint='NA' ></setcolor>
+			<setcolor id = '50' red = '162' green ='162' blue='122' alpha ='0' label='50' hint='no correlation' ></setcolor>
+			<setcolor id = '100' red = '70' green ='89' blue='112' alpha ='0' label='100' hint='positive correclation' ></setcolor>
+			<setcolor id = '150' red = '20' green ='60' blue='210' alpha ='0' label='150' hint='positive correclation' ></setcolor>
+			<setcolor id = '200' red = '2' green ='1' blue='190' alpha ='0' label='200' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '250' red = '2' green ='1' blue='190' alpha ='0' label='250' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='dry (0)' hint='completely dry' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twidelta-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twidelta' compid='test'>
+			<setcolor id = '0' red = '200' green ='50' blue='0' alpha ='0' label='0' hint='strongly negative correlation' ></setcolor>
+			<setcolor id = '62' red = '255' green ='225' blue='30' alpha ='0' label='63' hint='negative correlation' ></setcolor>
+			<setcolor id = '125' red = '190' green ='190' blue='190' alpha ='0' label='125' hint='positive correclation' ></setcolor>
+			<setcolor id = '187' red = '20' green ='110' blue='200' alpha ='0' label='188' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '250' red = '2' green ='1' blue='143' alpha ='0' label='250' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='dry (0)' hint='completely dry' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twistd-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twistd' compid='test'>
+			<setcolor id = '0' red = '200' green ='200' blue='200' alpha ='0' label='125' hint='positive correclation' ></setcolor>
+			<setcolor id = '50' red = '240' green ='224' blue='148' alpha ='0' label='188' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '100' red = '162' green ='162' blue='122' alpha ='0' label='188' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '150' red = '70' green ='89' blue='112' alpha ='0' label='250' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '200' red = '20' green ='60' blue='210' alpha ='0' label='250' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '250' red = '2' green ='1' blue='190' alpha ='0' label='250' hint='strong positive correlation' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='dry (0)' hint='completely dry' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette rntwi-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'rntwi' compid='test'>
+			<setcolor id = '0' red = '226' green ='87' blue='70' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '62' red = '236' green ='217' blue='92' alpha ='0' label='62' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '153' green ='119' blue='70' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '77' green ='124' blue='152' alpha ='0' label='187' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '6' green ='30' blue='146'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette deltarntwi-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'rntwidelta' compid='test'>
+			<setcolor id = '0' red = '226' green ='87' blue='70' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '63' red = '236' green ='217' blue='92' alpha ='0' label='63' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '215' green ='215' blue='215' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '77' green ='124' blue='152' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '6' green ='30' blue='146'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette rntwistd-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'rntwistd' compid='test'>
+			<setcolor id = '0' red = '215' green ='215' blue='215' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '62' red = '236' green ='217' blue='92' alpha ='0' label='62' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '153' green ='119' blue='70' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '77' green ='124' blue='152' alpha ='0' label='187' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '6' green ='30' blue='146'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twivsrntwi-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twivsrntwi' compid='test'>
+			<setcolor id = '1' red = '255' green ='255' blue='128' alpha ='0' label='twi-/rntwi-' hint='both TWI and RNTWI decreasing' ></setcolor>
+			<setcolor id = '2' red = '115' green ='208' blue='0' alpha ='0' label='twi/rntwi-' hint='RNTWI decreasing' ></setcolor>
+			<setcolor id = '3' red = '20'  green ='222'  blue='245' alpha ='0' label='twi+/rntwi-' hint='TWI increasing and RNTWI decreasing' ></setcolor>
+			<setcolor id = '4' red = '250' green ='150' blue='10' alpha ='0' label='twi-/rntwi' hint='TWI decreasing' ></setcolor>
+			<setcolor id = '5' red = '167' green ='167' blue='167' alpha ='0' label='twi/rntwi' hint='Both TWI and RNTWI wihtout change' ></setcolor>
+			<setcolor id = '6' red = '50'  green ='144'  blue='232' alpha ='0' label='twi+/rntwi' hint='TWI increasing' ></setcolor>
+			<setcolor id = '7' red = '245' green ='10' blue='10' alpha ='0' label='twi-/rntwi+' hint='TWI cecreasing and RNTWI increasing' ></setcolor>
+			<setcolor id = '8' red = '218' green ='0'  blue='218' alpha ='0' label='twi/rntwi+' hint='RNTWI increasing' ></setcolor>
+			<setcolor id = '9' red = '25' green ='12'  blue='172' alpha ='0' label='twi+/rntwi+' hint='both TWI and RNTWI increasing' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twivstrmm-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twivstrmm' compid='test'>
+			<setcolor id = '1' red = '255' green ='255' blue='128' alpha ='0' label='twi-/rntwi-' hint='both TWI and RNTWI decreasing' ></setcolor>
+			<setcolor id = '2' red = '115' green ='208' blue='0' alpha ='0' label='twi/rntwi-' hint='RNTWI decreasing' ></setcolor>
+			<setcolor id = '3' red = '20'  green ='222'  blue='245' alpha ='0' label='twi+/rntwi-' hint='TWI increasing and RNTWI decreasing' ></setcolor>
+			<setcolor id = '4' red = '250' green ='150' blue='10' alpha ='0' label='twi-/rntwi' hint='TWI decreasing' ></setcolor>
+			<setcolor id = '5' red = '167' green ='167' blue='167' alpha ='0' label='twi/rntwi' hint='Both TWI and RNTWI wihtout change' ></setcolor>
+			<setcolor id = '6' red = '50'  green ='144'  blue='232' alpha ='0' label='twi+/rntwi' hint='TWI increasing' ></setcolor>
+			<setcolor id = '7' red = '245' green ='10' blue='10' alpha ='0' label='twi-/rntwi+' hint='TWI cecreasing and RNTWI increasing' ></setcolor>
+			<setcolor id = '8' red = '218' green ='0'  blue='218' alpha ='0' label='twi/rntwi+' hint='RNTWI increasing' ></setcolor>
+			<setcolor id = '9' red = '25' green ='12'  blue='172' alpha ='0' label='twi+/rntwi+' hint='both TWI and RNTWI increasing' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette twivstrmmln-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'twivstrmmln' compid='test'>
+			<setcolor id = '1' red = '255' green ='255' blue='128' alpha ='0' label='twi-/rntwi-' hint='both TWI and RNTWI decreasing' ></setcolor>
+			<setcolor id = '2' red = '115' green ='208' blue='0' alpha ='0' label='twi/rntwi-' hint='RNTWI decreasing' ></setcolor>
+			<setcolor id = '3' red = '20'  green ='222'  blue='245' alpha ='0' label='twi+/rntwi-' hint='TWI increasing and RNTWI decreasing' ></setcolor>
+			<setcolor id = '4' red = '250' green ='150' blue='10' alpha ='0' label='twi-/rntwi' hint='TWI decreasing' ></setcolor>
+			<setcolor id = '5' red = '167' green ='167' blue='167' alpha ='0' label='twi/rntwi' hint='Both TWI and RNTWI wihtout change' ></setcolor>
+			<setcolor id = '6' red = '50'  green ='144'  blue='232' alpha ='0' label='twi+/rntwi' hint='TWI increasing' ></setcolor>
+			<setcolor id = '7' red = '245' green ='10' blue='10' alpha ='0' label='twi-/rntwi+' hint='TWI cecreasing and RNTWI increasing' ></setcolor>
+			<setcolor id = '8' red = '218' green ='0'  blue='218' alpha ='0' label='twi/rntwi+' hint='RNTWI increasing' ></setcolor>
+			<setcolor id = '9' red = '25' green ='12'  blue='172' alpha ='0' label='twi+/rntwi+' hint='both TWI and RNTWI increasing' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette zhydro-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'zhydro' compid='test'>
+			<setcolor id = '0' red = '177' green ='50' blue='38' alpha ='0' label='p.002' hint='p lt 0.002' ></setcolor>
+			<setcolor id = '47'  red = '238' green ='100' blue='100' alpha ='0' label='p.05' hint='p eq 0.05' ></setcolor>
+			<setcolor id = '59'  red = '255' green ='255' blue='77' alpha ='0' label='p.10' hint='p eq 0.10' ></setcolor>
+			<setcolor id = '125'  red = '212' green ='212' blue='212' alpha ='0' label='125' hint='no correlation' ></setcolor>
+			<setcolor id = '191'  red = '120' green ='198' blue='121' alpha ='0' label='p.10' hint='p eq 0.10' ></setcolor>
+			<setcolor id = '203'  red = '65' green ='182' blue='196' alpha ='0' label='p.05' hint='p eq 0.05' ></setcolor>
+			<setcolor id = '250'  red = '12' green ='44' blue='152' alpha ='0' label='p.002' hint='p lt 0.002' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'hydror2' compid='test'>
+			<setcolor id = '0' red = '240' green ='249' blue='232' alpha ='0' label='0' hint='0' ></setcolor>
+			<setcolor id = '50' red = '136' green ='199' blue='141' alpha ='0' label='50' hint='0.50' ></setcolor>
+			<setcolor id = '100' red = '8' green ='88' blue='158' alpha ='0' label='100' hint='1.00' ></setcolor>
+
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette zforest-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'zforest' compid='test'>
+			<setcolor id = '0' red = '192' green ='64' blue='32' alpha ='0' label='p.002' hint='p lt 0.002' ></setcolor>
+			<setcolor id = '47'  red = '255' green ='164' blue='128' alpha ='0' label='p.05' hint='p eq 0.05' ></setcolor>
+			<setcolor id = '59'  red = '255' green ='255' blue='77' alpha ='0' label='p.10' hint='p eq 0.10' ></setcolor>
+			<setcolor id = '125'  red = '212' green ='212' blue='212' alpha ='0' label='125' hint='no correlation' ></setcolor>
+			<setcolor id = '191'  red = '92' green ='192' blue='46' alpha ='0' label='p.10' hint='p eq 0.10' ></setcolor>
+			<setcolor id = '203'  red = '32' green ='128' blue='23' alpha ='0' label='p.05' hint='p eq 0.05' ></setcolor>
+			<setcolor id = '250'  red = '0' green ='64' blue='0' alpha ='0' label='p.002' hint='p lt 0.002' ></setcolor>
+			<setcolor id = '251' red = '255' green ='255' blue='202'  alpha ='0' label='no forest' hint='area with no forest' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='frame' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'forestr2' compid='test'>
+			<setcolor id = '0' red = '215' green ='255' blue='192' alpha ='0' label='0' hint='0' ></setcolor>
+			<setcolor id = '50' red = '92' green ='192' blue='46' alpha ='0' label='50' hint='0.50' ></setcolor>
+			<setcolor id = '100' red = '0' green ='64' blue='0' alpha ='0' label='100' hint='1.00' ></setcolor>
+
+			<setcolor id = '251' red = '255' green ='255' blue='202'  alpha ='0' label='no forest' hint='area with no forest' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette forest-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'forest' compid='test'>
+			<setcolor id = '0' red = '215' green ='255' blue='192' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '63' red = '160' green ='235' blue='92' alpha ='0' label='63' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '92' green ='192' blue='46' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '32' green ='128' blue='23' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '0' green ='64' blue='0'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '251' red = '255' green ='255' blue='202'  alpha ='0' label='no forest' hint='area with no forest' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette foreststd-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'foreststd' compid='test'>
+			<setcolor id = '0' red = '215' green ='215' blue='215' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '63' red = '160' green ='235' blue='92' alpha ='0' label='63' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '92' green ='192' blue='46' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '32' green ='128' blue='23' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '0' green ='64' blue='0'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '251' red = '255' green ='255' blue='202'  alpha ='0' label='no forest' hint='area with no forest' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+	<!-- addrasterpalette forestdelta-->
+	<process processid = 'addrasterpalette'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters palette = 'forestdelta' compid='test'>
+			<setcolor id = '0' red = '192' green ='64' blue='32' alpha ='0' label='0' hint='%(d)s' ></setcolor>
+			<setcolor id = '63' red = '255' green ='164' blue='128' alpha ='0' label='63' hint='%(d)s' ></setcolor>
+			<setcolor id = '125' red = '215' green ='215' blue='215' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '187' red = '92' green ='192' blue='46' alpha ='0' label='125' hint='%(d)s' ></setcolor>
+			<setcolor id = '250' red = '0' green ='64' blue='0'  alpha ='0' label='250' hint='%(d)s' ></setcolor>
+			<setcolor id = '251' red = '255' green ='255' blue='202'  alpha ='0' label='no forest' hint='area with no forest' ></setcolor>
+			<setcolor id = '253' red = '245' green ='237' blue='182' alpha ='0' label='unused' hint='NA' ></setcolor>
+			<setcolor id = '254' red = '32' green ='32' blue='32' alpha ='255' label='frame' hint='NA' ></setcolor>
+			<setcolor id = '255' red = '250' green ='250' blue='250' alpha ='255' label='255' hint='no data' ></setcolor>
+		</parameters>
+	</process>
+
+</palette>

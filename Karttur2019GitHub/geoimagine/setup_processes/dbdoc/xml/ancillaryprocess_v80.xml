@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+
+	<!-- Add rootprocid Periodicity -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Ancillary'>		
+			<title>Ancillary data processing</title>
+			<label>Processes for downloading and organizing ancillary data</label>
+		</parameters>
+	</process>
+
+	<!-- Add subprocid organizeancillary (Ancillary) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Ancillary' subprocid = 'organizeancillary' version ='0.8.0'  minuserstratum = '10'>		
+			<title>Organize ancillary data</title>
+			<label>Organize local (downloaded or created) ancillary data</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='NA' dstsystem='ancillary' srcdivision = 'NA' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'importdef' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif'>Import definition; defines specific import types.</parameter>
+			<parameter paramid = 'epsg' paramtyp = 'int' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >EPSG code as 4-letter digits; 0 indicates that the source data is accepted as is.</parameter>
+			<parameter paramid = 'instid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Institutional identifier.</parameter>
+			<parameter paramid = 'dsname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Dataset name.</parameter>
+			<parameter paramid = 'dsversion' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >Dataset version.</parameter>
+			<parameter paramid = 'accessdate' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Date of access.</parameter>
+			<parameter paramid = 'regionid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Default region.</parameter>			
+			<parameter paramid = 'dataurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Dataset url.</parameter>
+			<parameter paramid = 'metaurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Metadata url.</parameter>
+			<parameter paramid = 'metapath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Local path to metadata</parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Dataset title.</parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Dataset label.</parameter>
+			<parameter paramid = 'copyright' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'unknown' >Dataset copyright.</parameter>
+			<parameter paramid = 'replacestr' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Optional; string code for importing multiple layers in a single command.</parameter>
+			<parameter paramid = 'replacetag' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Optional tag (in this xml) that defines the replace string when importing multiple layers in a single command.</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Volume or top level path.</parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Extension of header file.</parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Extension of data file (if data is stored in separate file).</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Volume or top level path.</parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >Extension of header file.</parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >Extension of data file (if data is stored in separate file).</parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ANCILLARY' >Unused.</parameter>
+			<parameter paramid = 'division' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'region' >Unused.</parameter>
+		</node>
+		<node parent = 'process' element = 'srcraw'>
+			
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'any' ></parameter>
+			<parameter paramid = 'datadir' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datafile' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datalayer' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'dsversion' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'accessdate' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'theme' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>			
+			<parameter paramid = 'subtheme' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'copyright' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'metapath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'dataurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'metaurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2222.2' ></parameter>	
+		</node>
+		
+		<node parent = 'process' element = 'dstcomp'>	
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '*'>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid anciltxttodb (Ancillary) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Ancillary' subprocid = 'anciltxttodb' version ='0.8.0'  minuserstratum = '10'>		
+			<title>Register ancillary text data in db</title>
+			<label>Register locally organized ancillary text data in database</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'schema' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'template' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>	
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'txt' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'link'>
+			<parameter paramid = 'csvcolumn' paramtyp = 'int' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'csvnodata' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'csvaltcolumn' paramtyp = 'int' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'csvaltnodata' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'format' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'dbcolumn' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+</manageprocess>
+
+

@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' locality = '*' system='system'></userproj>
+	<path></path>
+	
+	<!-- Add rootprocid ExtractLayerData -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ExtractLayerData'>		
+			<title>Extract layer data</title>
+			<label>Extracts data from layers and saves the results to the database</label>
+		</parameters>
+	</process>
+
+	<!-- Add subprocid extractsoillinePVIPBI (ExtractLayerData) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ExtractLayerData' subprocid = 'extractsoillinePVIPBI' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Extract soil line data using PVI and PBI</title>
+			<label>Soil lines are extracted either for scenes/tiles or regions around sample points using the Perpendicular Vegetation Index and the Perpendicular Backgrund Index</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >	
+			<parameter paramid = 'radius' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '500' ></parameter>
+		
+			<parameter paramid = 'searchpercent' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'kernelsd' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '15' ></parameter>
+			<parameter paramid = 'pbisoilmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1500' ></parameter>
+			<parameter paramid = 'pbisoilmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'pvisoilmean' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '950' ></parameter>
+			<parameter paramid = 'pvisoilrange' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '250' ></parameter>
+			<parameter paramid = 'pvivegmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1500' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'seccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'pvipbi' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'pvi' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'pvi' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'srfi' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'allbands' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subprocid extractsoillineVI (ExtractLayerData) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ExtractLayerData' subprocid = 'extractsoillineVI' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Extract soil line data using a Vegetation Index</title>
+			<label>Soil lines are extracted either for scenes/tiles or regions around sample points using a Vegetation Index</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'searchpercent' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.5' ></parameter>
+			<parameter paramid = 'kernelsd' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '20' ></parameter>
+			<parameter paramid = 'visoilmean' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '975' ></parameter>
+			<parameter paramid = 'visoilrange' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>
+			<parameter paramid = 'vivegmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1200' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'pvipbi' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'PVI' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'PVI' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'srfi' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'allbands' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add rootprocid ExtractLayerData -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='RetrieveEndMembers'>		
+			<title>Extract layer data</title>
+			<label>Extracts data from layers and saves to database</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subprocid soilvegendmembers (RetrieveEndMembers) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='RetrieveEndMembers' subprocid = 'soilvegendmembers' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Retrieves soil and vegetation spectral endmembers</title>
+			<label>Retrieves soil and vegetation spectral end members from tabular data</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'trimming' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cleaning' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'strictclean' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'slnpixels' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1500' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'csv' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xml' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'endmember' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'veg' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>	
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'endmember' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'soil' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>	
+		</node>
+		<node parent = 'process' element = 'trim'>
+			<parameter paramid = 'bandid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'min' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'max' paramtyp = 'integert' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add rootprocid Orthogonalize -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Orthogonalize'>		
+			<title>Orthogonalize endmembers</title>
+			<label>Orthogonalize endmembers into a unitary matrix</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subprocid gramschmidtortho (Orthogonalize) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Orthogonalize' subprocid = 'gramschmidtortho' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Gram-Schmidt Orthogonalization of spectral endmembers</title>
+			<label>Gram-Schmidt Orthogonalization of spectral endmembers to eigen vectors</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'offset' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'csv' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xml' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'endmember' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'veg' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>	
+		</node>
+		<node parent = 'process' element = 'endmember'>
+			<parameter paramid = 'emid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'order' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'speclib' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'band'>
+			<parameter paramid = 'bandid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'order' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+	</process>
+
+	<!-- Add subprocid soilvegendmembersdelete (RetrieveEndMembers) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='RetrieveEndMembers' subprocid = 'soilvegendmembersdelete' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Delete soil and vegetation records with too few soilline pixels</title>
+			<label>Delete soil and vegetation records with too few soilline pixels</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'slnpixels' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1500' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'csv' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xml' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'endmember' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'veg' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>	
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'endmember' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'soil' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>	
+		</node>
+	</process>
+	
+	<!-- Add subprocid deletesceneendmember (RetrieveEndMembers) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='RetrieveEndMembers' subprocid = 'deletesceneendmember' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Delete endmembers for single scene</title>
+			<label>Delete endmembers for single scene</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'sceneid' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cleaning' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'strictclean' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'slnpixels' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1500' ></parameter>
+		</node>
+			</process>
+
+	<!-- Add subprocid examinsoillines (RetrieveEndMembers) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='RetrieveEndMembers' subprocid = 'examinsoillines' version ='0.8.0'  minuserstratum = '7'>		
+			<title>Examine soil lines given parameter conditions</title>
+			<label>Examine soil lines given parameter conditions</label>
+		</parameters>
+		<system>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='modis' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'rl' ></parameter>
+			<parameter paramid = 'minr2' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.8' ></parameter>
+			<parameter paramid = 'minslope' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.75' ></parameter>
+			<parameter paramid = 'maxslope' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '2.0' ></parameter>
+			<parameter paramid = 'minintercept' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'maxintercept' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '500' ></parameter>
+			<parameter paramid = 'withincriteria' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+	</process>
+	
+
+</manageprocess>

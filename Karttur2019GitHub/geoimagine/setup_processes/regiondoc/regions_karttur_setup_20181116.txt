@@ -1,0 +1,20 @@
+###### REGIONS #####
+
+#add_region_categories_v80.xml Adds region categories to the db
+add_region_categories_v80.xml
+
+#add_arbitrary_default_regions_vXX.xml Adds global default regions to the db
+add_arbitrary_default_regions_v80.xml
+
+#add_arctic_default_regions_vXX.xml Adds global arctic regions to the db
+add_arctic_default_regions_v80.xml
+
+#ancillary-import-kartturROI_2014.xml Imports global countries
+ancillary-import-kartturROI_2014.xml
+
+#Adds countries, subregions and continents to the db
+add_default_regions_from-vector_v80.xml
+
+#add_sub-sharan-africa_default_regions_vXX.xml Adds Sub saharan africa region to the db
+#Requires that the global country and continent data are added
+add_Africa-Sub_Sahara_default-region_v80.xml

@@ -1,0 +1,142 @@
+##### GENERAL #####
+# general_process_vXX.xml that installs the general processes is under db_setup
+#xml/general_schema_v80_sql.xml
+
+#periodicity_vXX.xml Installs periodicity processing used in all scripts handling actual spatial data
+periodicity_v80.xml
+
+##### USERLOCALE #####
+#manageuser_vXX.xml Installs user management processes
+manageuser_v80.xml
+
+#manage_project_vXX.xml Installs project management processes
+manage_project_v80.xml
+
+#regions_v##.xml Installs region management processes
+regions_v80.xml
+
+##### ANCILLARY #####
+#ancillaryprocess_vXX.xml Installs ancillary data processing
+ancillaryprocess_v80.xml
+
+##### LANDSAT #####
+#landsatprocess_vXX.xml Installs landsat specific processing
+landsatprocess_v80.xml
+
+##### MODIS #####
+#modisProcess_vXX.xml Installs MODIS specific processing
+modisProcess_v80.xml
+
+##### Linking regions to landsat and MODIS #####
+#linkregions_landsat_modis_vXX.xml Installs processes for linking modis and landsat plot/scene positions to regions
+linkregions_landsat_modis_v80.xml
+
+##### SSPECIMEN #####
+#specimenprocess_vXX.xml Installs specimen processes
+specimenprocess_v80.xml
+
+##### SQL DUMP#####
+#managesqldumps_v80.xml Installs processes for dumping and restoring the database
+managesqldumps_v80.xml
+
+##### RASTER ANAD VECTOR PROCESSING #####
+#vegindexprocesses_vXX.xml Installs vegetation index procesing
+vegindexprocesses_v80.xml
+
+#endmember_processes_vXX.xml Installs proceses for extracting and examining endmembers from optical satellite images
+endmember_processes_v80.xml
+
+#mapcalcprocesses_v80.xml Installs generic layer processing
+mapcalcprocesses_v80.xml
+
+#convert_ancillary_vXX.xml Installs specific layer conversion processing
+convert_ancillary_v80.xml
+
+#vectorprocess_v7XX.xml Installs vector processes
+vectorprocess_v80.xml
+
+#spataldb_process_vXX.xml define spatial db processes
+spataldb_process_v80.xml
+
+#imageprocess_vXX.xml Installs image spectral processing
+imageprocess_v80.xml
+
+##### Time series #####
+#timeseriesprocesses_vXX.xml Installs time series processing
+timeseriesprocesses_v80.xml
+
+#timeseriesgraph_setup_vXX.xml Installs processes for time series graphics
+timeseriesgraph_setup_v80.xml
+
+##### Layout #####
+#layoutprocess_vXX.xml Installs layout processes
+layoutprocess_v80.xml
+
+##### DEM #####
+#dem_vXX.xml Installs dem processes
+dem_v80.xml
+
+##### Export #####
+#ExportToByte_vXX.xml Installs export processes for layout
+ExportToByte_v80.xml
+
+#ExportZip_vXX.xml Installs export processes for Zip backup
+ExportZip_v80.xml
+
+##### Masking #####
+#maskprocesses_vXX.xml Installs masking processes
+maskprocesses_v80.xml
+
+##### Mosaic #####
+#mosaic_process_vXX.xml Installs mosaicing processes
+mosaic_process_v80.xml
+
+##### Tiling #####
+#tiling_process_vXX.xm Installs tiling processes'''
+tiling_process_v80.xml
+
+##### Layout #####
+
+##### Special #####
+#special_processes_v80.xml Installs default special rocesses
+special_processes_v80.xml
+
+##### Scalar #####
+#scalar_v80.xml Installs scalar processing
+scalar_v80.xml
+
+##### EXTRACT #####
+#extraxtrasterundervector_vXX.xml installs rater extraction under vector
+extraxtrasterundervector_v80.xml
+
+#extraxtcsvplots_vXX.xml installs point extraction for csv point list
+extraxtcsvplots_v80.xml
+
+##### CLIMATEINDEX #####
+#climateindexprocess_vXX.xml installs climateindex imports as ancillary process
+#climateindexprocess_v80.xml
+
+##### OVERLAY #####
+overlay_v80.xml
+overlay-special_v80.xml
+
+##### GRACE #####
+#graceProcess_vXX.xml Installs GRACE specific processing
+graceProcess_v80.xml
+
+##### SMAP #####
+#smapProcess_vXX.xml Installs SMAP specific processing
+smapProcess_v80.xml
+
+###### SENTINEL #####
+#sentinelProcess_v80_v80.xml installs the db entries for sentinel processes
+sentinelProcess_v80.xml
+
+###### GDAl utilities #####
+gdal_utlities_v80.xml
+
+##### Transform (rename) #####
+transform_v80.xml
+
+##### Updatedb #####
+updatelayer_v80.xml

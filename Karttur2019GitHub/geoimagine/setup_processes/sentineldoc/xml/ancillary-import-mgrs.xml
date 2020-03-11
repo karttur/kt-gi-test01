@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<organize>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'ancillary'></userproj>
+	<period timestep='static'></period>
+	
+	<process processid ='organizeancillary' dsversion = '3.0'>
+		<parameters importdef = 'shp'
+			epsg = '4326'
+			instid = 'NGA'
+			dsname  = 'mgrs'
+			dsversion = "1.0"
+			accessdate = "20180831"
+			copyright = ""
+			regionid = 'globe'
+			regioncat = 'globe'
+			dataurl = "http://earth-info.nga.mil/GandG/coordsys/grids/universal_grid_system.html"
+			metaurl="http://earth-info.nga.mil/GandG/coordsys/grids/universal_grid_system.html"
+			title = "mgrs global tiles"
+			label = "mgrs global tiles"
+		> </parameters>
+		
+		<srcpath volume = "None" hdrfiletype = "shp" datfiletype = "shp"></srcpath>
+		<dstpath volume = "karttur" hdrfiletype = "shp" datfiletype = "shp"></dstpath>
+
+		<srcraw id="utm-zones"
+			datadir ='data'
+			datafile = "UTM_Zone_Boundaries"
+			theme = "projection"
+			subtheme = "UTM"
+			metadir =""
+			metadfile =""
+			title = "UTM zone boundaries"
+			label = "UTM zone boundaries"
+		></srcraw>
+		<dstcomp>
+			<utm-zones source = "nga" product = "projection" folder = "utm" band = "utm-zones" prefix = "utm-zones" suffix = "0" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</utm-zones>
+		</dstcomp>
+
+		<srcraw id="gdz-zones"
+			datadir ='data'
+			datafile = "MGRS_GZD_WorldWide"
+			theme = "support"
+			subtheme = "tiles"
+			metadir =""
+			metadfile =""
+			title = "MGRS Grid Zone Designator"
+			label = "MGRS Grid Zone Designator"
+		></srcraw>
+		<dstcomp>
+			<gdz-zones source = "nga" product = "mgrs" folder = "mgrs" band = "gdz-zones" prefix = "gdz-zones" suffix = "v1" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</gdz-zones>
+		</dstcomp>
+		
+		<srcraw id="mgrs-100km-land"
+			datadir ='data'
+			datafile = "NGA_mgrs_100km_polys"
+			theme = "support"
+			subtheme = "tiles"
+			metadir =""
+			metadfile =""
+			title = "MGRS 100km square for land"
+			label = "MGRS 100km square for land"
+		></srcraw>
+		<dstcomp>
+			<mgrs-100km-land source = "nga" product = "mgrs" folder = "mgrs" band = "mgrs-100km-land" prefix = "mgrs-100km-land" suffix = "v1" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>	
+			</mgrs-100km-land>
+		</dstcomp>
+
+		<srcraw id="mgrs-100km"
+			datadir ='data'
+			datafile = "NGA_mgrs_100km_polys"
+			theme = "support"
+			subtheme = "tiles"
+			metadir =""
+			metadfile =""
+			title = "MGRS 100km square for land"
+			label = "MGRS 100km square for land"
+		></srcraw>
+		<dstcomp>
+			<mgrs-100km source = "nga" product = "mgrs" folder = "mgrs" band = "mgrs-100km" prefix = "mgrs-100km" suffix = "v1" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</mgrs-100km>
+		</dstcomp>
+
+		<srcraw id="mgrs-100km"
+			datadir ='data'
+			datafile = "mgrs_100km_polys"
+			theme = "support"
+			subtheme = "tiles"
+			metadir =""
+			metadfile =""
+			title = "MGRS 100km square (global)"
+			label = "MGRS 100km square (global)"
+		></srcraw>
+		<dstcomp>
+			<mgrs-100km source = "nga" product = "mgrs" folder = "mgrs" band = "mgrs-100km" prefix = "mgrs-100km" suffix = "v1" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</mgrs-100km>
+		</dstcomp>
+	</process>
+</organize>

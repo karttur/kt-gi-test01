@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'ancillary'></userproj>
+	<period startyear = '2014' endyear = '2014' timestep='singleyear'></period>
+
+
+	<!-- For a region to be added, the category, the parentid category and the explicit parentid must all exist-->
+
+	<!-- Add contient regions from shape file-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'NAME' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'NAME'
+			labelcol = 'CATEGORY'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<continents source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "continents" prefix = "continents" suffix = "0"></continents>
+		</srccomp>
+		<dstcopy srccomp='continents' band='continents'></dstcopy>
+	</process>
+
+	<!-- Add continent-subregions from shape file-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'NAME' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'NAME'
+			labelcol = 'CATEGORY'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<continent-subregions source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "continent-subregions" prefix = "continent-subregions" suffix = "0"></continent-subregions>
+		</srccomp>
+		<dstcopy srccomp='continent-subregions' band='continent-subregions'></dstcopy>
+
+	</process>
+
+	<!-- Add country regions from shape file (globe as parentid so OK)-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'ISO_A2' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'FORMALNAME'
+			labelcol = 'TYPE'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<country source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "country" prefix = "country" suffix = "0"></country>
+		</srccomp>
+		<dstcopy srccomp='country' band='country'></dstcopy>
+
+
+	</process>
+
+	<!-- Add country-continent from shape file-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'CODE' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'FORMALNAME'
+			labelcol = 'TYPE'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<country-continent source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "country-continent" prefix = "country-continent" suffix = "0"></country-continent>
+		</srccomp>
+		<dstcopy srccomp='country-continent' band='country-continent'></dstcopy>
+
+	</process>
+
+	<!-- Marine countries and continents-->
+	<!-- Add regions from shape file-->
+
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'NAME' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'NAME'
+			labelcol = 'CATEGORY'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<marine-continents source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "marine-continents" prefix = "marine-continents" suffix = "0"></marine-continents>
+		</srccomp>
+		<dstcopy srccomp='marine-continents' band='marine-continents'></dstcopy>
+	</process>
+
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'NAME' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'NAME'
+			labelcol = 'CATEGORY'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<marine-continent-subregions source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "marine-continent-subregions" prefix = "marine-continent-subregions" suffix = "0"></marine-continent-subregions>
+		</srccomp>
+		<dstcopy srccomp='marine-continent-subregions' band='marine-continent-subregions'></dstcopy>
+	</process>
+
+	<!-- Add regions from shape file-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'CODE' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'FORMALNAME'
+			labelcol = 'TYPE'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<marine-countries source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "marine-countries" prefix = "marine-countries" suffix = "0"></marine-countries>
+		</srccomp>
+		<dstcopy srccomp='marine-countries' band='marine-countries'></dstcopy>
+	</process>
+
+	<!-- Add regions from shape file-->
+	<process processid ='defaultregionfromvector'>
+		<parameters idcol = 'CODE' namecol = 'NAME' categorycol ='CATEGORY' parentidcol = 'PARENTNAME' parentcatcol = 'PARENTCAT'  stratumcol = 'STRATUM' version = 'kt1' epsg = '4326'
+			titlecol = 'FORMALNAME'
+			labelcol = 'TYPE'>
+		</parameters>
+		<srcpath volume = 'africa'></srcpath>
+		<dstpath volume = 'africa'></dstpath>
+		<srccomp>
+			<marine-continent-countries source = "karttur" product = "karttur" folder = 'defaultregions'
+			     band = "marine-continent-countries" prefix = "marine-continent-countries" suffix = "0"></marine-continent-countries>
+		</srccomp>
+		<dstcopy srccomp='marine-contient-countries' band='marine-continent-countries'></dstcopy>
+	</process>
+
+</manageprocess>

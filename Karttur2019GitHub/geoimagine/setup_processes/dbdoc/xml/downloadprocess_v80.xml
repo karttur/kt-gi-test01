@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<download>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+
+	<!-- Add rootprocid landsatproc -->	
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Download'>		
+			<title>General download processes</title>
+			<label>General download processes</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid managebulkmetaurl (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Download' subprocid = 'ftpfolderfiles' version ='0.8.0' minuserstratum = '10'>
+			<title>FTP download files in a folder</title>
+			<label>FTP download files in a folder</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+				
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'server' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >	
+			</parameter>
+			<parameter paramid = 'username' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'password' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'srcpath' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'dstpath' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'interval' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.05' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+</download>

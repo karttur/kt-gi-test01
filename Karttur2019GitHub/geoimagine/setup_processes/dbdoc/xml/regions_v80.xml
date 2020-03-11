@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<!-- Add rootprocid ManageRegion -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion'>
+			<title>Manage regions for bulk processing</title>
+			<label>Create, change or delete regions</label>
+			<rooterrortext>Error not defined</rooterrortext>
+		</parameters>
+	</process>
+
+	<!-- Add subrocid regioncategories (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'regioncategories' version ='0.8.0' minuserstratum = '10'>
+			<title>Define default region categories for public use</title>
+			<label>Only superuser can set region categories, send request it you really need a new region category</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'regioncat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'parentcat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'stratum' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '0' max ='100'></minmax>
+			</parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid defaultregion (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'defaultregion' version ='0.8.0' minuserstratum = '10'>
+			<title>Define default region for public use</title>
+			<label>Only superuser can set default regions, send request it you really need a new default region category</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'regionid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'regionname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'regioncat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'global' label ='global'></setvalue>
+				<setvalue value = 'continental' label ='continental'></setvalue>
+				<setvalue value = 'subcontinental' label ='subcontinental'></setvalue>
+				<setvalue value = 'basin' label ='basin'></setvalue>
+				<setvalue value = 'subbasin' label ='subbasin'></setvalue>
+				<setvalue value = 'sovereign' label ='sovereign'></setvalue>
+				<setvalue value = 'country' label ='country'></setvalue>
+				<setvalue value = 'state' label ='state'></setvalue>
+				<setvalue value = 'district' label ='district'></setvalue>
+				<setvalue value = 'community' label ='community'></setvalue>
+				<setvalue value = 'tract' label ='tract'></setvalue>
+				<setvalue value = 'site' label ='site'></setvalue>
+			</parameter>
+			<parameter paramid = 'parentid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'parentcat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '4326'></parameter>
+			<parameter paramid = 'stratum' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '0' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'minlat' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '-90' max ='90'></minmax>
+			</parameter>
+			<parameter paramid = 'maxlat' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '-90' max ='90'></minmax>
+			</parameter>
+			<parameter paramid = 'minlon' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '-180' max ='180'></minmax>
+			</parameter>
+			<parameter paramid = 'maxlon' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '-180' max ='180'></minmax>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstcomp'>
+			<parameter paramid = 'roi' paramtyp = 'element' tagorattr = 'E' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'roi' ></parameter>
+
+		</node>
+		<node parent = 'dstcomp' element = 'roi'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'defaultregions' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'roi' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'roi' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-32768' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'NA' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid regionextent (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'regionextent' version ='0.8.0' minuserstratum = '3'>
+			<title>Define region extent</title>
+			<label>Automatically define region extent from sample point distributions</label>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'wrs' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '1' max ='2'></minmax>
+			</parameter>
+			<parameter  paramid = 'locality' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue  value = 'tractid' label ='Scenes of tiles covering all sample plots within a user defined tract'></setvalue>
+				<setvalue value = 'siteid' label ='Scenes of tiles covering all sample plots within a user defined site'></setvalue>
+			</parameter>
+			<parameter paramid = 'buffer' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.01' ></parameter>
+			<parameter paramid = 'distunits' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = 'deg' >
+				<setvalue value = 'deg' label ='degrees'></setvalue>
+				<setvalue value = 'm' label ='meter'></setvalue>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid defaultregionextent (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'defaultregionextent' version ='0.8.0' minuserstratum = '10'>
+			<title>Define extent of default region</title>
+			<label>Only superuser can set default regions, send request it you really need a new default region category</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'defid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'minlon' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'maxlon' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'minlat' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'maxlat' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid defaultregionfromvector (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'defaultregionfromvector' version ='0.8.0' minuserstratum = '10'>
+			<title>Define default region for public use from vector data</title>
+			<label>Only superuser can set default regions, send request it you really need a new default region category</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='system' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'idcol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'ISO_A3'></parameter>
+			<parameter paramid = 'namecol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'NAME'></parameter>
+			<parameter paramid = 'categorycol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'CATEGORY'></parameter>
+			<parameter paramid = 'parentidcol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'PARENTNAME'></parameter>
+			<parameter paramid = 'parentcatcol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'PARENTCAT'></parameter>
+			<parameter paramid = 'stratumcol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'STRATUM'>
+				<minmax min = '0' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'titlecol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'FORMALNAME' ></parameter>
+			<parameter paramid = 'labelcol' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'TYPE' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstcopy'>
+			<parameter paramid = 'srccomp' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid userregionfromvector (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'userregionfromvector' version ='0.8.0' minuserstratum = '10'>
+			<title>Define default region for public use from vector data</title>
+			<label>Only superuser can set default regions, send request it you really need a new default region category</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'defid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'defname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'regioncat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'global' label ='global'></setvalue>
+				<setvalue value = 'continental' label ='continental'></setvalue>
+				<setvalue value = 'subcontinental' label ='subcontinental'></setvalue>
+				<setvalue value = 'basin' label ='basin'></setvalue>
+				<setvalue value = 'subbasin' label ='subbasin'></setvalue>
+				<setvalue value = 'sovereign' label ='sovereign'></setvalue>
+				<setvalue value = 'country' label ='country'></setvalue>
+				<setvalue value = 'state' label ='state'></setvalue>
+				<setvalue value = 'district' label ='district'></setvalue>
+				<setvalue value = 'community' label ='community'></setvalue>
+				<setvalue value = 'tract' label ='tract'></setvalue>
+				<setvalue value = 'site' label ='site'></setvalue>
+			</parameter>
+			<parameter paramid = 'defparentid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'minuserstratum' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<minmax min = '0' max ='10'></minmax>
+			</parameter>
+			<parameter paramid = 'deftitle' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'deflabel' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'minlon' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'maxlon' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'minlat' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'maxlat' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '4326' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid userregionfromraster (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'userregionfromraster' version ='0.8.0' minuserstratum = '10' system = 'system'>
+			<title>Define user region from raster</title>
+			<label>User regions are defined both in lat lon, and the original projection of the raster</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'defid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'projectid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'regname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'regtitle' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'reglabel' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'raster' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid userregionfromcoord (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'userregionfromcoord' version ='0.8.0' minuserstratum = '10'>
+			<title>Define user region from coordinates</title>
+			<label>User regions are defined both in lat lon, and ay other epsg projection given by user</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'extentsource' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'coords'></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'minx' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'miny' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'maxx' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'maxy' paramtyp = 'float' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid tractfromcoordcsv (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'tractfromcoordcsv' version ='0.8.0' minuserstratum = '10'>
+			<title>Define user tract from coordinates in csv file</title>
+			<label>User rtract are defined both in lat lon, and ay other epsg projection given by user</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'tractid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'tractname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'parentid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'roi' paramtyp = 'boolean' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'public' paramtyp = 'boolean' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'getwrs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'getmodtiles' paramtyp = 'boolean' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True'></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcfilepath'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'filepath' ></parameter>
+
+			<parameter paramid = 'filepath' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'region' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'region' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'NA' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.0' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'vector' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid createsite (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'createsite' version ='0.8.0' minuserstratum = '10'>
+			<title>Define user site within existing tract</title>
+			<label>Only superuser can set sites at present, send request it you really need a new default region category</label>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'tractid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'siteid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'sitename' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'sitetitle' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'sitelabel' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid tractregion (ManageRegion) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageRegion' subprocid = 'tractregion' version ='0.8.0' minuserstratum = '10'>
+			<title>Define tract region</title>
+			<label>An existing ancillary layer used for defining a tract region, including linking wrs and modis tiles</label>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'tractid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'roi' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'public' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'getwrs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'getmodtiles' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+</manageprocess>

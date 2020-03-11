@@ -1,0 +1,7 @@
+###### CLIMATE #####
+
+#import_cimate_signals_vXX.xml Adds global climate signals to ancillary
+climateindex-import-NOAA.xml
+
+#climindextodb_vXX.xml Adds global climate signals to db
+climindextodb_v80.xml

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<specialdefaultregions>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<period timestep = 'static'></period>
+	
+	<!-- Add default region arcticland (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'arcticland' regionname = 'Arctic circumpolar land'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '58.0' maxlon = '180' maxlat = '84.0' epsg = '4326' version = '1'
+			title = 'Global arctic land zone'
+			label = 'Region covering arctic cricumpolar land masses extending from 58 to 84 degrees north.'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+	
+	<!-- Add default region arcticdem (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'arcticdem' regionname = 'Arctic circumpolar DEM'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '58.0' maxlon = '180' maxlat = '90.0' epsg = '4326' version = '1'
+			title = 'Global arctic DEM'
+			label = 'Region covering 60 to 90 degrees north, coinciding with the core region of the Arctic DEM.'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+	
+	<!-- Add default region arcticdemext (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'arcticdemext' regionname = 'Arctic circumpolar DEM'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '50.0' maxlon = '180' maxlat = '90.0' epsg = '4326' version = '1'
+			title = 'Global arctic extended DEM'
+			label = 'Region covering 50 to 90 degrees north, coinciding with the extended region of the Arctic DEM.'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+	
+</specialdefaultregions>

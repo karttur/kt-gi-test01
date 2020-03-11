@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<download>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+
+	<!-- Add rootprocid landsatproc -->	
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='GRACEProc'>		
+			<title>GRACE processes</title>
+			<label>GRACE processes</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid OrganizeGrace (GRACEProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='GRACEProc' subprocid = 'OrganizeGrace' version ='0.8.0' minuserstratum = '10'>
+			<title>Organize Grace</title>
+			<label>Organize Grace</label>
+		</parameters>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'importdef' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'grace' ></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'int' tagorattr = 'Attr' required = 'N' defaultvalue = '4326' ></parameter>
+			<parameter paramid = 'instid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'NASA-JPL' ></parameter>
+			<parameter paramid = 'dsname' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'GRACE' ></parameter>
+			<parameter paramid = 'dsversion' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'accessdate' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'regionid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'global' ></parameter>			
+			<parameter paramid = 'dataurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'grace.jpl.nasa.gov' ></parameter>
+			<parameter paramid = 'metaurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'grace.jpl.nasa.gov' ></parameter>
+			<parameter paramid = 'metapath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'GRACE' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'GRACE' ></parameter>
+			<parameter paramid = 'copyright' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'unknown' ></parameter>
+			<parameter paramid = 'replacestr' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'replacetag' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'solutionset' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ANCILLARY' ></parameter>
+			<parameter paramid = 'division' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'region' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcraw'>	
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'any' ></parameter>
+			<parameter paramid = 'datadir' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datafile' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datalayer' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'dsversion' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'accessdate' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'theme' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>			
+			<parameter paramid = 'subtheme' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'copyright' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'metapath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'dataurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'metaurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>	
+		</node>
+		
+		<node parent = 'process' element = 'dstcomp'>	
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'dstcomp' element = '*'>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+</download>

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<period timestep = 'static'></period>
+
+	<!-- Add default region globall (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'global' regionname = 'Global'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-90' maxlon = '180' maxlat = '90' epsg = '4326' version = '1'
+			title = 'Global region'
+			label = 'Global region'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			 <roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region tropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'globaltropics' regionname = 'Globaltropics'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-23.43705' maxlon = '180' maxlat = '23.43705' epsg = '4326' version = '1'
+			title = 'Global tropical region'
+			label = 'Region between the tropics'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			 <roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region northtropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'northtropical' regionname = 'North Tropical zones'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '0' maxlon = '180' maxlat = '23.43705' epsg = '4326' version = '1'
+			title = 'Global norhtern tropical region'
+			label = 'Region between the equator and north 23.5 degrees'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default southtropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'southtropical' regionname = 'South Tropical zones'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-23.43705' maxlon = '180' maxlat = '0' epsg = '4326' version = '1'
+			title = 'Global southern tropical region'
+			label = 'Region between the equator and south 23.5 degrees'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region norhtsubtropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'northsubtropical' regionname = 'North Subtropical zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '23.43705' maxlon = '180' maxlat = '40' epsg = '4326' version = '1'
+			title = 'Global northern subtropical region'
+			label = 'Region extending between the northern tropic (23.5 degrees) to 40 degrees north'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region southsubtropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'southsubtropical' regionname = 'South Subtropical zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-40' maxlon = '180' maxlat = '-23.43705' epsg = '4326' version = '1'
+			title = 'Global northern subtropical region'
+			label = 'Region extending between the southern tropic (23.5 degrees) to 40 degrees south'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region pantropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'pantropical' regionname = 'Global Pantropical zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-40' maxlon = '180' maxlat = '40' epsg = '4326' version = '1'
+			title = 'Global panropical region'
+			label = 'Region including the tropics and subtropics (between 40 degrees north and south)'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region trmmtropical (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'trmm' regionname = 'TRMM tropical zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-50' maxlon = '180' maxlat = '50' epsg = '4326' version = '1'
+			title = 'TRMM precipitation coverage region'
+			label = 'Region for the TRMM data products'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			 <roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region northtemperate (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'northtemperate' regionname = 'North Temperate zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '40' maxlon = '180' maxlat = '66.565325' epsg = '4326' version = '1'
+			title = 'Global northern temperate zone'
+			label = 'Region extending between 40 degrees north and the arctic circles (66.5 degrees)'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+
+	</process>
+
+	<!-- Add default region southtemperate (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'southtemperate' regionname = 'South Temperate zone'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-66.565325' maxlon = '180' maxlat = '-40' epsg = '4326' version = '1'
+			title = 'Global southern temperate zone'
+			label = 'Region extending between 40 degrees south and the antarctic circles (66.5 degrees)'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region arctic (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'arctic' regionname = 'Arctic'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '66.565325' maxlon = '180' maxlat = '90' epsg = '4326' version = '1'
+			title = 'Global arctic zone'
+			label = 'Region extending from the arctic circles (66.5 degrees) to the North Pole'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+
+	<!-- Add default region arctic (global)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'global' regionid = 'antarctic' regionname = 'Antarctic'  parentid = 'globe' parentcat = 'globe' stratum = '1' minlon = '-180' minlat = '-90' maxlon = '180' maxlat = '-66.565325' epsg = '4326' version = '1'
+			title = 'Global antarctic zone'
+			label = 'Region extending from the antarctic circles (66.5 degrees) to the South Pole'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+</manageprocess>

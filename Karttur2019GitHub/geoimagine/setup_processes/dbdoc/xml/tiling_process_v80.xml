@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+
+	<!-- Add rootprocid TimeSeries -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Tiling'>		
+			<title>Create tiles from regional data</title>
+			<label>Create tiles from regional data</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subprocid mosaic (Mosaic) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Tiling' subprocid = 'tileregiontomodis' version ='0.8.0'  minuserstratum = '5'>		
+			<title>Tile regional data to fit modis</title>
+		</parameters>
+		
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'src_system' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'src_region' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'tar_epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '6842' ></parameter>
+			<parameter paramid = 'tr_xres' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '463.313' ></parameter>
+			<parameter paramid = 'tr_yres' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '463.313' ></parameter>
+			<parameter paramid = 'resample' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'near' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'image' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+		</node>
+	</process>
+
+</manageprocess>

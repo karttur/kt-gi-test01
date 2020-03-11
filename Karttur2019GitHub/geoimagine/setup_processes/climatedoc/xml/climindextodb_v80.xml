@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'ancillary'></userproj>
+
+	<period timestep='static'></period>	
+
+	<!-- Insert soi to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<soi source = "NOAA" product = "climateindex" folder = "climateindex" band = "soi" prefix = "soi"  suffix = "v"></soi>
+		</srccomp>
+	</process>
+	
+	<!-- Insert censo to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<censo source = "NOAA" product = "climateindex" folder = "climateindex" band = "censo" prefix = "censo"  suffix = "v"></censo>
+		</srccomp>
+	</process>
+	
+	<!-- Insert ea to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<ea source = "NOAA" product = "climateindex" folder = "climateindex" band = "ea" prefix = "ea"  suffix = "v"></ea>
+		</srccomp>
+	</process>
+	
+	<!-- Insert nina3 to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<nina3 source = "NOAA" product = "climateindex" folder = "climateindex" band = "nina3" prefix = "nina3"  suffix = "v"></nina3>
+		</srccomp>
+	</process>
+	
+	<!-- Insert epo to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<epo source = "NOAA" product = "climateindex" folder = "climateindex" band = "epo" prefix = "epo"  suffix = "v"></epo>
+		</srccomp>
+	</process>
+	
+	
+	<!-- Insert nao to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<nao source = "NOAA" product = "climateindex" folder = "climateindex" band = "nao" prefix = "nao"  suffix = "v"></nao>
+		</srccomp>
+	</process>
+	
+	<!-- Insert noi to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<noi source = "NOAA" product = "climateindex" folder = "climateindex" band = "noi" prefix = "noi"  suffix = "v"></noi>
+		</srccomp>
+	</process>
+	
+	<!-- Insert pdo to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<pdo source = "NOAA" product = "climateindex" folder = "climateindex" band = "pdo" prefix = "pdo"  suffix = "v"></pdo>
+		</srccomp>
+	</process>
+	
+	<!-- Insert pna to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<pna source = "NOAA" product = "climateindex" folder = "climateindex" band = "pna" prefix = "pna"  suffix = "v"></pna>
+		</srccomp>
+	</process>
+	
+	<!-- Insert wp to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<wp source = "NOAA" product = "climateindex" folder = "climateindex" band = "wp" prefix = "wp"  suffix = "v"></wp>
+		</srccomp>
+	</process>
+	
+	<!-- Insert amo to db -->
+	<process processid ='anciltxttodb'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters schema = 'climateindex' table = 'climindex' template = 'climateindex' ></parameters>
+		<srcpath volume = "OPUS" hdrfiletype = "txt" datfiletype = ""></srcpath>
+	
+		<srccomp >
+			<amo source = "NOAA" product = "climateindex" folder = "climateindex" band = "amo" prefix = "wp"  suffix = "v"></amo>
+		</srccomp>
+	</process>
+	
+
+
+
+</manageprocess>
+

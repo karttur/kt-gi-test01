@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<process processid = 'addrootproc'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess'>
+			<title>Manage Sentinel processes</title>
+			<label>Specific Sentinel processes (download, organise, explode, cloud, masking)</label>
+		</parameters>
+	</process>
+
+	<!-- Add subrocid downloadSentinelAncillary (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'downloadSentinelAncillary' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Sentinel granule meta data</title>
+			<label>Download Sentinel granule meta data using vectors</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='ancillary' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'tablesearchid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'searchid' >
+			</parameter>
+
+			<parameter paramid = 'granuleoverlap' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1' >
+			</parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '30' >
+			</parameter>
+
+			<parameter paramid = 'startdate' paramtyp = 'date' tagorattr = 'Attr' required = 'Y' defaultvalue = '20140401' >
+			</parameter>
+
+			<parameter paramid = 'enddate' paramtyp = 'date' tagorattr = 'Attr' required = 'Y' defaultvalue = '20180821' >
+			</parameter>
+
+			<parameter paramid = 'startdoy' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' >
+			</parameter>
+
+			<parameter paramid = 'enddoy' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '365' >
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'region' ></parameter>
+		</node>
+	</process>
+	
+	
+	<!-- Add subrocid downloadSentinelRegion (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'downloadSentinelRegion' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Sentinel granule meta data</title>
+			<label>Download Sentinel granule meta data using region</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='system' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'systemregion' >
+			</parameter>
+			
+			<parameter paramid = 'tablesearchid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'regionid' >
+			</parameter>
+
+			<parameter paramid = 'granuleoverlap' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1' >
+			</parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '30' >
+			</parameter>
+
+			<parameter paramid = 'startdate' paramtyp = 'date' tagorattr = 'Attr' required = 'Y' defaultvalue = '20140401' >
+			</parameter>
+
+			<parameter paramid = 'enddate' paramtyp = 'date' tagorattr = 'Attr' required = 'Y' defaultvalue = '20300101' >
+			</parameter>
+
+			<parameter paramid = 'startdoy' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' >
+			</parameter>
+
+			<parameter paramid = 'enddoy' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '365' >
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+
+	</process>
+
+
+	<!-- Add subrocid downloadSentinelData (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'downloadSentinelData' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Sentinel data</title>
+			<label>Download Sentinel data from entrieds in db</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'tiles' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'downloaded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='No (download only tiles not registered as downloaded)'></setvalue>
+				<setvalue value = 'Y' label ='Yes (download only tiles registered as downloaded)'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '30'></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+	</process>
+	
+	<!-- Add subrocid downloadSentinelDataRegion (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'downloadSentinelDataRegion' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Sentinel data</title>
+			<label>Download Sentinel data from entries in db</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='system' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			
+			<parameter paramid = 'tiles' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'downloaded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='No (download only tiles not registered as downloaded)'></setvalue>
+				<setvalue value = 'Y' label ='Yes (download only tiles registered as downloaded)'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '30'>
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+		
+
+	</process>
+
+
+	<!-- Add subrocid downloadSentineTile (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'downloadSentinelTile' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Sentinel data</title>
+			<label>Download Sentinel data from entrieds in db</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'tileid' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tileid'></parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'downloaded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='No (download only tiles not registered as downloaded)'></setvalue>
+				<setvalue value = 'Y' label ='Yes (download only tiles registered as downloaded)'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '30'></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid findgranuletiles (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'findgranuletiles' version ='0.8.0' minuserstratum = '10'>
+			<title>Find mgrs tiles covered by granulue</title>
+			<label>Find mgrs tiles covered by granulue</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'granuleoverlap' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1'></parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'downloaded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='No (download only tiles not registered as downloaded)'></setvalue>
+				<setvalue value = 'Y' label ='Yes (download only tiles registered as downloaded)'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'GRD' >
+				<setvalue value = 'GRD' label ='GRD'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'mgrsversion' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'NGA' >
+				<setvalue value = 'NGA' label ='NGA'></setvalue>
+				<setvalue value = 'ESA' label ='ESA'></setvalue>
+				<setvalue value = 'NGAESA' label ='NGAESA'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '100'></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+	</process>
+
+
+	<!-- Add subrocid explodeSentinel (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'explodeSentinel' version ='0.8.0' minuserstratum = '10'>
+			<title>Explode Sentinel tiles</title>
+			<label>Explode Sentinel tiles from entried in db</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'granuleoverlap' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1'></parameter>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'exploded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+				<setvalue value = 'N' label ='No (download only tiles not registered as downloaded)'></setvalue>
+				<setvalue value = 'Y' label ='Yes (download only tiles registered as downloaded)'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+				<setvalue value = 'GRD' label ='GRD'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'cloudmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+
+			<parameter paramid = 'setcloudmask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'setdetfoomask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'setnodatamask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'setdefectask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'setsaturamask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'settecquamask' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			<parameter paramid = 'set0tonull' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid explodeSentinelTiles (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'extractsentineltilecoords' version ='0.8.0' minuserstratum = '10'>
+			<title>Extract Sentinel tile coordinates</title>
+			<label>Extract Sentinel tile coordinates and add to db</label>
+		</parameters>
+
+		<system>
+			<procsys system = 'sentinel' srcsystem='ancillary' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'centroid' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True' >
+			</parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ancillary' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid extractmgrscoords (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'extractmgrscoords' version ='0.8.0' minuserstratum = '10'>
+			<title>Extract Sentinel tile coordinates</title>
+			<label>Extract Sentinel tile coordinates and add to db</label>
+		</parameters>
+
+		<system>
+			<procsys system = 'sentinel' srcsystem='ancillary' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'centroid' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = 'True' >
+			</parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ancillary' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid geocheckSentinelTiles (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'geochecksentineltiles' version ='0.8.0' minuserstratum = '10'>
+			<title>Check geolocation of sentinel tile</title>
+			<label>Must first check MSI data and set mgrs to allow SAR-C data to be organized</label>
+		</parameters>
+
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'orbitdirection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'B' >
+				<setvalue value = 'B' label ='Both'></setvalue>
+				<setvalue value = 'A' label ='Ascending'></setvalue>
+				<setvalue value = 'D' label ='Descending'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+		</node>
+
+		<!-- Add subrocid explodeSentinelTiles (SentineProcess)
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ancillary' ></parameter>
+		</node>
+		-->
+	</process>
+
+	<!-- Add subrocid reorgnaize (SentineProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'reorganisesentinel' version ='0.8.0' minuserstratum = '10'>
+			<title>Reorganize Sentinel tiles and granules</title>
+			<label>Reorganize Sentinel tiles and granules</label>
+		</parameters>
+		<system>
+			<procsys system = 'sentinel' srcsystem='sentinel' dstsystem='sentinel' srcdivision = 'region' dstdivision='tiles'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'searchpath' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+
+			<parameter paramid = 'tiles' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+
+			<parameter paramid = 'platformname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Sentinel-2' >
+				<setvalue value = 'Sentinel-1' label ='Sentinel-1'></setvalue>
+				<setvalue value = 'Sentinel-2' label ='Sentinel-2'></setvalue>
+				<setvalue value = 'Sentinel-3' label ='Sentinel-3'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'prodtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'S2MSI1C' >
+				<setvalue value = 'S2MSI1C' label ='S2MSI1C'></setvalue>
+			</parameter>
+
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'zip' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid LinkDefaultRegionsToSentinel (MODISProcess) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SentinelProcess' subprocid = 'LinkDefaultRegionsToSentinel' version ='0.8.0' minuserstratum = '10'>
+			<title>Link Default Regions to Sentinel tiles</title>
+			<label>Link Default Regions to sentinel tiles</label>
+		</parameters>
+
+		<system>
+			<procsys system = 'sentinel' srcsystem='ancillary' dstsystem='sentinel' srcdivision = 'region' dstdivision='NA'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'dummy' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+		</node>
+
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'vector' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ancillary' ></parameter>
+		</node>
+
+	</process>
+
+
+</manageprocess>

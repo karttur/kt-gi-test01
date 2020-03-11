@@ -1,0 +1,405 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc'>		
+			<title>Manage Layout processes</title>
+			<label>Manage Layout processes</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid addrasterpalette (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'addrasterpalette' version ='0.8.0' minuserstratum = '10'>
+			<title>Add raster palette</title>
+			<label>Add raster palette</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'palette' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'compid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'access' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'default' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'setcolor' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'setcolor' ></parameter>
+		</node>
+		<node parent = 'parameters' element = 'setcolor'>
+			<parameter paramid = 'id' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'red' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'green' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'blue' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'alpha' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'label' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hint' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>				
+	</process>
+	
+	
+	<!-- Add subrocid createlegend (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'createlegend' version ='0.8.0' minuserstratum = '10'>
+			<title>Create legend for raster layer</title>
+			<label>Create legend for raster layer</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<!-- palette 
+			<parameter paramid = 'palette' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			-->
+			<!--  if palette set to default the system looks for a default legend, if palette is set the set palette is used-->			
+			<!-- range to include -->
+			<parameter paramid = 'palmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '250' ></parameter>
+			<parameter paramid = 'palmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			
+			<!-- include special features -->
+			<parameter paramid = 'two51' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two52' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two53' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two54' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two55' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<!-- dimensions -->
+			
+			<parameter paramid = 'height' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '500' ></parameter>
+			<parameter paramid = 'width' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '100' ></parameter>
+			<parameter paramid = 'soloheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '70' ></parameter>
+	
+			<parameter paramid = 'pngwidth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>
+			<parameter paramid = 'pngheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>
+
+			<!-- Layout -->
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'buffer' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{10,10,10,10}' ></parameter>
+			<parameter paramid = 'margin' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{10,5,10,5}' ></parameter>
+			<parameter paramid = 'textpadding' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{10,5,10,5}' ></parameter>
+
+			<parameter paramid = 'framecolor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '254' ></parameter>
+			<parameter paramid = 'framefill' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'framestrokewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'label' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'fontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'font' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Verdana' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'fonteffect' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'titlefontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'titlefont' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Verdana' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '16' ></parameter>
+			<parameter paramid = 'titlefonteffect' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'sticklen' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'compresslabels' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'separatebuffer' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{5,5,5,5}' ></parameter>
+			
+			<parameter paramid = 'precision' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			
+			<!-- legend head (units) -->
+			<parameter paramid = 'columnhead' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			
+			<!-- Layout for multicolumns -->
+			<parameter paramid = 'columns' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'matrix' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'columntext' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'rowtext' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'rowhead' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<!-- the compositions for this legend -->
+		<node parent = 'process' element = 'comp'>	
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	 	
+		</node>
+
+	</process>
+	
+	<!-- Add subrocid addmovieclock (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'addmovieclock' version ='0.8.0' minuserstratum = '10'>
+			<title>Create movieclock layout</title>
+			<label>Create movieclock layout</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'name' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'tlmargin' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{5,5,5,5}' ></parameter>
+			<parameter paramid = 'clmargin' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{5,5,5,5}' ></parameter>
+			<parameter paramid = 'position' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'll' ></parameter>
+			<parameter paramid = 'bgcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'tlborder' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2' ></parameter>
+			<parameter paramid = 'clborder' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '6' ></parameter>
+			<parameter paramid = 'tlbordercolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'clbordercolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'clcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'blue' ></parameter>
+			<parameter paramid = 'tlheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'tlticks' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'tltickwidth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2' ></parameter>
+			<parameter paramid = 'tickcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'boettcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'silver' ></parameter>
+			<parameter paramid = 'textatclock' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'tlcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'purple' ></parameter>
+			<parameter paramid = 'clradius' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '50' ></parameter>
+			<parameter paramid = 'clhandcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'purple' ></parameter>
+			<parameter paramid = 'clframecolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '24' ></parameter>
+			<parameter paramid = 'fontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'grey' ></parameter>
+			<parameter paramid = 'fontbackground' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'rotate' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'font' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Arial' ></parameter>
+			<parameter paramid = 'textinvideo' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'transparent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid movieclock (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'movieclock' version ='0.8.0' minuserstratum = '10'>
+			<title>Create movieclock layout</title>
+			<label>Create movieclock layout</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'width' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '900'></parameter>
+			<parameter paramid = 'name' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<!--
+			<parameter paramid = 'tlmargin' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{5,5,5,5}' ></parameter>
+			<parameter paramid = 'clmargin' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '{5,5,5,5}' ></parameter>
+			<parameter paramid = 'position' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'll' ></parameter>
+			<parameter paramid = 'bgcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'tlborder' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2' ></parameter>
+			<parameter paramid = 'clborder' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '6' ></parameter>
+			<parameter paramid = 'tlbordercolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'clbordercolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'clcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'blue' ></parameter>
+			<parameter paramid = 'tlheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'tlticks' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'tltickwidth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2' ></parameter>
+			<parameter paramid = 'tickcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'beige' ></parameter>
+			<parameter paramid = 'boettcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'silver' ></parameter>
+			<parameter paramid = 'textatclock' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'tlcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'purple' ></parameter>
+			<parameter paramid = 'clradius' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '50' ></parameter>
+			<parameter paramid = 'clhandcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'purple' ></parameter>
+			<parameter paramid = 'clframecolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '24' ></parameter>
+			<parameter paramid = 'fontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'grey' ></parameter>
+			<parameter paramid = 'fontbackground' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'rotate' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'font' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Arial' ></parameter>
+			<parameter paramid = 'textinvideo' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'transparent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			-->
+		</node>
+	</process>
+	
+	<!-- Add subrocid createdefaultscaling (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'createscaling' version ='0.8.0' minuserstratum = '10'>
+			<title>Create legend for raster layer</title>
+			<label>Create legend for raster layer</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			
+			<!-- scaling -->
+			<parameter paramid = 'power' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'powerna' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '251' ></parameter>
+			<parameter paramid = 'mirror0' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'srcmin' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'srcmax' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dstmin' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dstmax' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			
+		</node>
+		<!-- the compositions for this legend -->
+		<node parent = 'process' element = 'comp'>	
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	 	
+		</node>
+	</process>
+	
+	<!-- Add subrocid exportlegend (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'exportlegend' version ='0.8.0' minuserstratum = '10'>
+			<title>Export legend for raster layer</title>
+			<label>Export legend for raster layer</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		
+		<node parent = 'process' element = 'parameters'>
+			<!--  if palette set to default the system looks for a default legend, if palette is set the set palette is used-->			
+			<parameter paramid = 'palette' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+					
+				
+			<!-- range to include -->
+			<parameter paramid = 'palmax' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '250' ></parameter>
+			<parameter paramid = 'palmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			
+			<!-- include special features -->
+			<parameter paramid = 'two51' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two52' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two53' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two54' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'two55' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<!-- dimensions -->
+			<parameter paramid = 'height' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '500' ></parameter>
+			<parameter paramid = 'width' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '100' ></parameter>
+			<parameter paramid = 'soloheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '70' ></parameter>
+	
+			<parameter paramid = 'pngwidth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>
+			<parameter paramid = 'pngheight' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>
+
+			<parameter paramid = 'jpg' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+
+			<!-- Layout -->
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'A' ></parameter>
+			<parameter paramid = 'buffer' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'margin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'textpadding' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+
+			<parameter paramid = 'framecolor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '254' ></parameter>
+			<parameter paramid = 'framefill' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'framestrokewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'label' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'fontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'font' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Verdana' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'fonteffect' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'titlefontcolor' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'black' ></parameter>
+			<parameter paramid = 'titlefont' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Verdana' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefonteffect' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'sticklen' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			<parameter paramid = 'compresslabels' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'separatebuffer' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' ></parameter>
+			
+			<!-- legend head (units) -->
+			<parameter paramid = 'columnhead' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			
+			<!-- Layout for multicolumns -->
+			<parameter paramid = 'columns' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'matrix' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'columntext' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'rowtext' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'rowhead' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'comp'>	
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>	 	
+		</node>
+	</process>
+
+	<!-- Add subrocid addpubtext (LayoutProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'addpubtext' version ='0.8.0' minuserstratum = '10'>
+			<title>Add raster palette</title>
+			<label>Add raster palette</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'compid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'palversion' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'header' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'subheader' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'legendheader' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'legendtype' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'banner' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hints' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'acknow' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'descript' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'reference' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'disclaim' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'copyrigth' paramtyp = 'string' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+		</node>			
+	</process>
+	
+	<!-- Add subprocid updaterastermeta (LayoutProc) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LayoutProc' subprocid = 'updaterastermeta' version ='0.8.0'  minuserstratum = '10'>		
+			<title>Replace null and color ramp in existing raster</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'palette' paramtyp ='text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+</manageprocess>	

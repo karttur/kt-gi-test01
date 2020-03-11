@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<runprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>	
+	<!-- Add rootprocid ManageUser -->	
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Export'>		
+			<title>Export spatial data</title>
+			<label>Export spatial data</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid manageuser (ManageUser) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Export' subprocid = 'exportzip' version ='0.8.0' minuserstratum = '10'>
+			<title>Export zip compressed data</title>
+			<label>Export data while compressing to defined zip format</label>
+		</parameters>
+
+		
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='backup' srcdivision = 'region' dstdivision='region'></procsys>
+			<procsys system = 'region' srcsystem='region' dstsystem='backup' srcdivision = 'region' dstdivision='region'></procsys>
+			<procsys system = 'modis' srcsystem='modis' dstsystem='backup' srcdivision = 'tiles' dstdivision='tiles'></procsys>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='backup' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'zip' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tar.bz2' ></parameter>
+			<parameter paramid = 'organized' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'BACKUP' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'src' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'Y' ></parameter>
+		</node>
+
+	</process>
+</runprocess>
+
+

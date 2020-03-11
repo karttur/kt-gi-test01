@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>	
+	<!-- Add rootprocid ManageUser -->	
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageUser'>		
+			<title>Manage Users</title>
+			<label>Add, update or remover users</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid manageuser (ManageUser) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageUser' subprocid = 'manageuser' version ='0.8.0' minuserstratum = '9'>
+			<title>Add, update or remover users</title>
+			<label>Add, update or remover users</label>
+		</parameters>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'userid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'userpswd' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'usercat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'viewer' label ='view user'></setvalue>
+				<setvalue value = 'viewergroup' label ='viewer user group'></setvalue>
+				<setvalue value = 'tract' label ='single tract user'></setvalue>
+				<setvalue value = 'tractgroup' label ='single tract user group'></setvalue>
+				<setvalue value = 'state' label ='cstate specific user'></setvalue>
+				<setvalue value = 'stategroup' label ='state specific user group'></setvalue>
+				<setvalue value = 'country' label ='country specific user'></setvalue>
+				<setvalue value = 'countrygroup' label ='country specific user group'></setvalue>
+				<setvalue value = 'continent' label ='continent specific user'></setvalue>
+				<setvalue value = 'continentgroup' label ='continent specific user group'></setvalue>
+				<setvalue value = 'global' label ='scientific user'></setvalue>
+				<setvalue value = 'globalgroup' label ='group user group'></setvalue>
+				<setvalue value = 'develop' label ='dvelopment user'></setvalue>
+				<setvalue value = 'developgroup' label ='dvelopment user group'></setvalue>
+				<setvalue value = 'science' label ='scientific user'></setvalue>
+				<setvalue value = 'sciencegroup' label ='scientific user group'></setvalue>
+				<setvalue value = 'super' label ='global user'></setvalue>
+			</parameter>
+			<parameter paramid = 'firstname' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'middlename' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'lastname' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'adressname' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'usetitle' paramtyp = 'boolean' tagorattr = 'Tag' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'country' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'state' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'adress1' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'adress2' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'postcode' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'postadress' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'email1' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'email2' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'landline' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'mobile' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'organization' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'department' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'orgunit' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'position' paramtyp = 'text' tagorattr = 'Tag' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+</manageprocess>

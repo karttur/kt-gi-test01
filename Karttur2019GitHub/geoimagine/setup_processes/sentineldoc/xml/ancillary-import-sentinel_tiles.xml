@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<organize>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'ancillary'></userproj>
+	<period timestep='static'></period>
+	<process processid ='organizeancillary' dsversion = '3.0'>
+		<parameters importdef = 'shp'
+			epsg = '4326'
+			instid = 'ESA'
+			dsname  = 'sentinel'
+			dsversion = "1.0"
+			accessdate = "20180608"
+			copyright = ""
+			regionid = 'globe'
+			regioncat = 'globe'
+			dataurl = ""
+			metaurl=""
+			title = "Sentinel global tiles"
+			label = "Sentinel global tiles"
+		> </parameters>
+
+		<srcpath volume = "None" hdrfiletype = "shp" datfiletype = "shp"></srcpath>
+		<dstpath volume = "karttur" hdrfiletype = "shp" datfiletype = "shp"></dstpath>
+
+		<srcraw id="sentinel-product-region"
+			datadir ='data'
+			datafile = "sentinel_2a"
+			theme = "support"
+			subtheme = "roi"
+			metadir =""
+			metadfile =""
+			title = "Sentinel product region"
+			label = "Sentinel product region"
+		></srcraw>
+		<dstcomp>
+			<sentinel-product-region source = "ESA" product = "sentineltiles" folder = "mgrs" band = "sentinel-product-region" prefix = "sentinel-product-region" suffix = "v1" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</sentinel-product-region>
+		</dstcomp>
+
+		<srcraw id="sentinel-tiles"
+			datadir ='data'
+			datafile = "sentinel-tiles-poly_sentineltiles_global_0_v1"
+			theme = "support"
+			subtheme = "tiles"
+			metadir =""
+			metadfile =""
+			title = "Sentinel global tiles"
+			label = "Sentinel global tiles (polygons)"
+		></srcraw>
+		<dstcomp>
+			<sentinel-tiles source = "ESA" product = "sentineltiles" folder = "mgrs" band = "sentinel-tiles" prefix = "sentinel-tiles" suffix = "global" scalefac = "1" offsetadd = "0" dataunit = "na" celltype = 'vector' cellnull = '0' measure ='N' masked='N'>
+			</sentinel-tiles>
+		</dstcomp>
+
+	</process>
+
+</organize>

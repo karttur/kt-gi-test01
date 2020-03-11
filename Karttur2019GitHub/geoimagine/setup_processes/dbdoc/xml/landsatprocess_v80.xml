@@ -1,0 +1,1498 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LandsatProc>
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<!-- Add rootprocid landsatproc -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc'>
+			<title>Manage landsat processes</title>
+			<label>Specific landsat processes (order, download, organize)</label>
+			<rooterrortext>Error not defined</rooterrortext>
+		</parameters>
+	</process>
+
+	<!-- Add subrocid managebulkmetaurl (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'managebulkmetaurl' version ='0.8.0' minuserstratum = '10'>
+			<title>Manage the url link to the USGS bulk metadata</title>
+			<label>Only required if the url link to the USGS bulk metadata changes</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'collection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'ARD' label ='ARD'></setvalue>
+				<setvalue value = 'Landsat1' label ='Landsat1'></setvalue>
+			</parameter>
+			<parameter paramid = 'level' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '1' >
+			</parameter>
+			<parameter paramid = 'sensor' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'all' label ='All sensors'></setvalue>
+				<setvalue value = 'olitirs' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'etm' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'tm' label ='Landsat 4 TM'></setvalue>
+				<setvalue value = 'mss' label ='Landsat 5 TM'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'label' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'xmlurl' paramtyp = 'url' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'csvurl' paramtyp = 'url' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid downloadbulkmeta (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'downloadbulkmeta' version ='0.8.0' minuserstratum = '10'>
+			<title>Download USGS bulk metadata</title>
+			<label>Download bulk metadata from USGS per collection, level and sensor</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'collection' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'ARD' label ='ARD'></setvalue>
+				<setvalue value = 'Landsat1' label ='Landsat1'></setvalue>
+			</parameter>
+			<parameter paramid = 'level' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '1' >
+			</parameter>
+			<parameter paramid = 'sensor' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'all' label ='All sensors'></setvalue>
+				<setvalue value = 'olitirs' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'etm' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'tm' label ='Landsat 4 TM'></setvalue>
+				<setvalue value = 'mss' label ='Landsat 5 TM'></setvalue>
+			</parameter>			
+			<parameter paramid = 'filetype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'csv' >
+				<setvalue value = 'csv' label ='gz compresssed csv file'></setvalue>
+				<setvalue value = 'xml' label ='gz compresssed xml file'></setvalue>
+			</parameter>
+			<parameter paramid = 'daysago' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '7' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid landsatmetadb (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'landsatmetadb' version ='0.8.0' minuserstratum = '10'>
+			<title>Define landsat metadata db and capture</title>
+			<label>Create db tables and columns and link csv column data to db</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<!-- sensat is a dummy here -->
+			<parameter paramid = 'sensat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'L**' >
+
+			</parameter>
+			<parameter paramid = 'sensor' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'ARD' label ='ARD'></setvalue>
+				<setvalue value = 'OLITIRS' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'ETM' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'TM' label ='Landsat TM'></setvalue>
+				<setvalue value = 'MSS' label ='Landsat MSS'></setvalue>		
+			</parameter>
+
+			<parameter paramid = 'filetype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'csv' >
+				<setvalue value = 'csv' label ='csv file'></setvalue>
+				<setvalue value = 'xml' label ='xml file'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'column'>
+			<parameter paramid = 'csv' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'main' label ='main table'></setvalue>
+				<setvalue value = 'sub' label ='main table'></setvalue>
+				<setvalue value = 'geo' label ='main table'></setvalue>
+				<setvalue value = 'url' label ='main table'></setvalue>
+				<setvalue value = 'update' label ='main table'></setvalue>
+				<setvalue value = 'mss' label ='main table'></setvalue>
+				<setvalue value = 'tm' label ='main table'></setvalue>
+				<setvalue value = 'etm' label ='main table'></setvalue>
+				<setvalue value = 'etmcal' label ='main table'></setvalue>
+				<setvalue value = 'olitirs' label ='main table'></setvalue>
+			</parameter>
+			<parameter paramid = 'column' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'type' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'char' label ='character'></setvalue>
+				<setvalue value = 'varchar' label ='character varying'></setvalue>
+				<setvalue value = 'integer' label ='integer'></setvalue>
+				<setvalue value = 'real' label ='real'></setvalue>
+				<setvalue value = 'double precision' label ='double precision'></setvalue>
+				<setvalue value = 'bool' label ='boolen'></setvalue>
+				<setvalue value = 'date' label ='date'></setvalue>
+			</parameter>
+			<parameter paramid = 'length' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' >
+				<minmax min = '1' max ='255'></minmax>
+			</parameter>
+			<parameter paramid = 'required' paramtyp = 'bool' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'default' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+
+	<!-- Add subrocid insertbulkmeta (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'insertbulkmeta' version ='0.8.0' minuserstratum = '10'>
+			<title>Insert bulk metadata in db from downloaded bulk file</title>
+			<label>Iterates over all items (rows or nodes) in a downloaded bulk meta data file </label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'sensat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'L**' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<process processid = 'addsubproc'>
+		<delete>Y</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'downloadLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'remoteuser' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'serverurl' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'https://e4ftl01.cr.usgs.gov' >
+			</parameter>
+			<parameter paramid = 'asscript' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'downloaded' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+					
+			<parameter paramid = 'imgqualmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '7' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'geormse' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'datatypel1' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'satelnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'sensorid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'maxcloudcov' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '100' >
+			</parameter>
+			
+			<parameter paramid = 'maxcloudcovland' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '30' >
+			</parameter>
+			
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid searchLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'searchLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'remoteuser' paramtyp = 'string' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'serverurl' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'https://e4ftl01.cr.usgs.gov' >
+			</parameter>
+			<parameter paramid = 'asscript' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'download' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+					
+			<parameter paramid = 'imgqualmin' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '7' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'geormse' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'datatypel1' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'satelnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'sensorid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'maxcloudcov' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '100' >
+			</parameter>
+			
+			<parameter paramid = 'maxcloudcovland' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '30' >
+			</parameter>
+			
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid downloadLandsatESPAbulkOrder (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'downloadLandsatESPAbulkOrder' version ='0.8.0' minuserstratum = '10'>
+			<title>Download ESPA bulk order from order HTML</title>
+			<label>Download ESPA bulk order from order HTML</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'asscript' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			
+			<parameter paramid = 'htmlfn' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'all' >
+			</parameter>
+			
+			<parameter paramid = 'organize' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			
+			<parameter paramid = 'explode' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'html' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+		
+	<!-- Add subrocid organizelandsat (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'organizelandsat' version ='0.8.0' minuserstratum = '10'>
+			<title>Organize downloaded landsat scenes></title>
+			<label>Moves downloaded landsat scenes in place while registering to database</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'wrs' paramtyp = 'int' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = '1' label ='WRS 1'></setvalue>
+				<setvalue value = '2' label ='WRS 2'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'replaceold' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'redundant' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'sensat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' >
+				<setvalue value = 'LC8' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'LE7' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'LT4' label ='Landsat 4 TM'></setvalue>
+				<setvalue value = 'LT5' label ='Landsat 5 TM'></setvalue>
+				<setvalue value = 'LM1' label ='Landsat 1 MSS'></setvalue>
+				<setvalue value = 'LM2' label ='Landsat 2 MSS'></setvalue>
+				<setvalue value = 'LM3' label ='Landsat 3 MSS'></setvalue>
+				<setvalue value = 'LM4' label ='Landsat 4 MSS'></setvalue>
+				<setvalue value = 'LM5' label ='Landsat 5 MSS'></setvalue>
+				<setvalue value = '*' label ='all downloaded scenes'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'srfi' >
+				<setvalue value = 'reflectance' label ='surfance reflectance factor index'></setvalue>
+				<setvalue value = 'dn' label ='digital number'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'download' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'original' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-9999' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid explodeLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'explodeLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'asscript' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+					
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid getmetaLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'getmetaLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+	
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'txt' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid TOARFILandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'TOARFILandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'reflgainbias' >
+				<setvalue value = 'paris' label ='following jack paris'></setvalue>
+				<setvalue value = 'reflgainbias' label ='reflectance gain and bias'></setvalue>
+				<setvalue value = 'radqcal' label ='using radiance and quantization level'></setvalue>
+			</parameter>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'factor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10000' >
+			</parameter>
+			
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-32768' >
+			</parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'INT16' >
+			</parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'reflectance' >
+			</parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.0001' >
+			</parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'R' >
+			</parameter>
+			
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'eemeta' >
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid DNtoSRFILandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'DNtoSRFILandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'reflgainbias' >
+				<setvalue value = 'paris' label ='following jack paris'></setvalue>
+				<setvalue value = 'reflgainbias' label ='reflectance gain and bias'></setvalue>
+				<setvalue value = 'radqcal' label ='using radiance and quantization level'></setvalue>
+			</parameter>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+						
+			<parameter paramid = 'icRL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.34' >
+			</parameter>
+			<parameter paramid = 'wtBL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.55114' >
+			</parameter>
+			<parameter paramid = 'powFacC' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '2.2714' >
+			</parameter>
+			<parameter paramid = 'msfac' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' >
+			</parameter>
+			
+			<parameter paramid = 'powfacmin' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.77' >
+			</parameter>
+			<parameter paramid = 'powfacmax' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '3.27' >
+			</parameter>
+			
+			<parameter paramid = 'mindelta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.01' >
+			</parameter>
+			<parameter paramid = 'maxdelta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1' >
+			</parameter>
+			<parameter paramid = 'max2delta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' >
+			</parameter>
+			
+			<parameter paramid = 'showplot' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+	
+	<!-- Add subrocid LandsatTMDosSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'LandsatTMDosSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Set DOS for single scene</title>
+			<label>Set DOS for single scene and calculate srf path for atmospheric correction</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			
+			<parameter paramid = 'lsatprodid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'icRL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.34' >
+			</parameter>
+			<parameter paramid = 'wtBL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.55114' >
+			</parameter>
+			<parameter paramid = 'powFacC' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '2.2714' >
+			</parameter>
+			<parameter paramid = 'msfac' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' >
+			</parameter>
+			
+			<parameter paramid = 'powfacmin' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.77' >
+			</parameter>
+			<parameter paramid = 'powfacmax' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '3.27' >
+			</parameter>
+			
+			<parameter paramid = 'optimizep' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			
+			<parameter paramid = 'bl' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'gl' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'rl' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'na' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'mb' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'mc' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+
+	</process>
+	
+	<!-- Add subrocid SRFIfromDOSLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'SRFIfromDOSLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>DOS to SRFI</title>
+			<label>oDOS to SRFI</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'factor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10000' >
+			</parameter>
+			
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-32768' >
+			</parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'INT16' >
+			</parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'reflectance' >
+			</parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.0001' >
+			</parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'R' >
+			</parameter>
+			
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' >
+			</parameter>
+			
+			<parameter paramid = 'icRL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.34' >
+			</parameter>
+			<parameter paramid = 'wtBL' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.55114' >
+			</parameter>
+			<parameter paramid = 'powFacC' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '2.2714' >
+			</parameter>
+			<parameter paramid = 'msfac' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' >
+			</parameter>
+			
+			<parameter paramid = 'powfacmin' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.77' >
+			</parameter>
+			<parameter paramid = 'powfacmax' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '3.27' >
+			</parameter>
+			
+			<parameter paramid = 'mindelta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.01' >
+			</parameter>
+			<parameter paramid = 'maxdelta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1' >
+			</parameter>
+			<parameter paramid = 'max2delta' paramtyp = 'float' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' >
+			</parameter>
+			
+			<parameter paramid = 'showplot' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			
+			<parameter paramid = 'powfacdef' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'multi' >
+				<alt>rl</alt>
+				<alt>multi</alt>
+				<alt>chavez</alt>
+				<alt>meanall</alt>
+				<alt>meanrlmulti</alt>
+				<alt>min</alt>
+				<alt>max</alt>
+			</parameter>
+			
+			<parameter paramid = 'darkedgedef' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'multi' >
+				
+				<alt>rl</alt>
+				<alt>multi</alt>
+				<alt>chavez</alt>
+				<alt>meanall</alt>
+				<alt>meanrlmulti</alt>
+				<alt>min</alt>
+				<alt>max</alt>
+				<alt>dos</alt>
+				<alt>paris</alt>
+			</parameter>
+			
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+	
+	<!-- Add subrocid RGBLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'RGBLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Landsat Scene pleasing RGB</title>
+			<label>Landsat Scene pleasing RGB</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'theme' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'srfi' >
+				<setvalue value = 'dn' label ='DN'></setvalue>
+				<setvalue value = 'toa' label ='TOA'></setvalue>
+				<setvalue value = 'srfi' label ='SRFI'></setvalue>
+				<setvalue value = 'srfi-tc' label ='SRFI'></setvalue>
+			</parameter>
+						
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'auto' >
+			</parameter>
+			
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'modifiedbrovey' >
+			</parameter>
+			        
+			<parameter paramid = 'redpower' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.90' >
+			</parameter>
+			<parameter paramid = 'greenpower' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.89' >
+			</parameter>
+			<parameter paramid = 'bluepower' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.83' >
+			</parameter>
+			
+			<parameter paramid = 'redlimit' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '10000' >
+			</parameter>
+			<parameter paramid = 'greenlimit' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '10800' >
+			</parameter>
+			<parameter paramid = 'bluelimit' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6300' >
+			</parameter>
+			
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+	
+	
+
+<!-- Add subrocid MetaMaskLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'MetaMaskLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Landsat Scene cloud, shadow and snow mask from meta data</title>
+			<label>Landsat Scene cloud, shadow and snow mask from meta data</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+									
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			
+			<parameter paramid = 'confidence' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'medium' >
+			</parameter>
+			
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '255' >
+			</parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'BYTE' >
+			</parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'mask' >
+			</parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' >
+			</parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+			</parameter>
+
+			        
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+
+	<!-- Add subrocid EmissivityKelvinSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'EmissivityKelvinSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Download Landsat scene from USGS</title>
+			<label>ownload Landsat scene from USGS</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+			<parameter paramid = 'method' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'emisgainbias' >
+				<setvalue value = 'lut' label ='Look up table'></setvalue>
+				<setvalue value = 'emisgainbias' label ='emissivity gain and bias'></setvalue>
+				<setvalue value = 'radqcal' label ='using radiance and quantization level'></setvalue>
+			</parameter>
+								
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'DN' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'EMISFI' label ='EMISFI'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'factor' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '10' >
+			</parameter>
+			
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-32768' >
+			</parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'INT16' >
+			</parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'emissivity' >
+			</parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.1' >
+			</parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'R' >
+			</parameter>
+			
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'eemeta' >
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+
+		</node>
+	</process>
+	
+	<!-- Add subrocid dbupdateLandsatSingleScene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'dbupdateLandsatSingleScene' version ='0.8.0' minuserstratum = '10'>
+			<title>Loop over all db recorded Landsat scenes</title>
+			<label>Loop over all db recorded Landsat scenes</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+
+					
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>	
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+				<setvalue value = '' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<setvalue value = '0' label ='any'></setvalue>
+			</parameter>
+			
+			<parameter paramid = 'reflsuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'toasuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'srfisuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'emissuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'decloudsuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter paramid = 'tercorsuffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			
+			<parameter paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'DN' label ='DN'></setvalue>
+				<setvalue value = 'TOA' label ='TOA'></setvalue>
+				<setvalue value = 'SRFI' label ='SRFI'></setvalue>
+			</parameter>
+
+			<parameter paramid = 'wrspath' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'wrsrow' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid explodelandsatscene (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>N</overwrite>
+		<delete>Y</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'explodelandsatscene' version ='0.8.0' minuserstratum = '7'>
+			<title>Extracts the content of landsat scenes></title>
+			<label>Scenes must be organized prior to extration</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'wrs' paramtyp = 'int' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = '1' label ='WRS 1'></setvalue>
+				<setvalue value = '2' label ='WRS 2'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'replaceold' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'redundant' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter element = 'parameters' paramid = 'exploded' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'sensat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'LC8' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'LE7' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'LT4' label ='Landsat 4 TM'></setvalue>
+				<setvalue value = 'LT5' label ='Landsat 5 TM'></setvalue>
+				<setvalue value = 'LM1' label ='Landsat 1 MSS'></setvalue>
+				<setvalue value = 'LM2' label ='Landsat 2 MSS'></setvalue>
+				<setvalue value = 'LM3' label ='Landsat 3 MSS'></setvalue>
+				<setvalue value = 'LM4' label ='Landsat 4 MSS'></setvalue>
+				<setvalue value = 'LM5' label ='Landsat 5 MSS'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'srfi' >
+				<setvalue value = 'reflectance' label ='surfance reflectance factor index'></setvalue>
+				<setvalue value = 'dn' label ='digital number'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'original' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-9999' ></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid metafileparams (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'metafileparams' version ='0.8.0' minuserstratum = '7'>
+			<title>Defines landsat metadatafile></title>
+			<label>Defines the type and content of landsat metadata files and relates them to the db</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'archive' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'USGScollL1v2016' >
+				<setvalue value = 'USGScollL1v2016' label ='USGS Landsat collection L1 version 2016'></setvalue>
+			</parameter>
+			<parameter element = 'parameters' paramid = 'metatypeid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'metatype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+				<setvalue value = 'xml' label ='xml file'></setvalue>
+				<setvalue value = 'oneline' label ='Single line meta file'></setvalue>
+				<setvalue value = 'table' label ='tabled metafile'></setvalue>
+				<setvalue value = 'MTL' label ='MTL type metadata'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameter'>
+			<parameter element = 'parameters' paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'node'>
+			<parameter element = 'parameter' paramid = 'parentid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'paramid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'paramtyp' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'tagorattr' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'required' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'prestring' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'poststring' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'separator' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'itemnr' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter element = 'parameter' paramid = 'substitute' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid checklandsat (LandsatProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'checklandsat' version ='0.8.0' minuserstratum = '7'>
+			<title>Check landsat consistency></title>
+			<label>Compares the database and files of the karttur landsat archive</label>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'scenes' dstdivision='scenes'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'sensat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' >
+				<setvalue value = 'LC8' label ='Landsat 8 OLI/TIRS'></setvalue>
+				<setvalue value = 'LE7' label ='Landsat 7 ETM+)'></setvalue>
+				<setvalue value = 'LT4' label ='Landsat 4 TM'></setvalue>
+				<setvalue value = 'LT5' label ='Landsat 5 TM'></setvalue>
+				<setvalue value = 'LM1' label ='Landsat 1 MSS'></setvalue>
+				<setvalue value = 'LM2' label ='Landsat 2 MSS'></setvalue>
+				<setvalue value = 'LM3' label ='Landsat 3 MSS'></setvalue>
+				<setvalue value = 'LM4' label ='Landsat 4 MSS'></setvalue>
+				<setvalue value = 'LM5' label ='Landsat 5 MSS'></setvalue>
+				<setvalue value = '***' label ='Check all landsat scenes'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'srfi' >
+				<setvalue value = 'reflectance' label ='surfance reflectance factor index'></setvalue>
+				<setvalue value = 'dn' label ='digital number'></setvalue>
+			</parameter>
+			<parameter element = 'parameters' paramid = 'organized' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter element = 'parameters' paramid = 'redundant' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter element = 'parameters' paramid = 'download' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter element = 'parameters' paramid = 'extract' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter element = 'parameters' paramid = 'meta' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+			<parameter element = 'parameters' paramid = 'mask' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcperiod'>
+			<parameter paramid = 'startyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1900' ></parameter>
+			<parameter paramid = 'endyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2100' ></parameter>
+			<parameter paramid = 'startmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' ></parameter>
+			<parameter paramid = 'endmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'startday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' ></parameter>
+			<parameter paramid = 'endday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '31' ></parameter>
+			<parameter paramid = 'addons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'maxdaysaddons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonstartmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonendmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonstartday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonendday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'allscenes' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xml' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'xml' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'orignal' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'masked' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' ></parameter>
+		</node>
+	</process>
+			
+	<!-- Add subrocid landsatscenetemplate (LandsatProc) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'landsatscenetemplate' version ='0.8.0' minuserstratum = '10'>
+			<title>Templates for identifying landsat scene types</title>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'subtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'A'></parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			
+			<parameter  paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'srfi' label ='reflectance'></setvalue>
+				<setvalue value = 'dn' label ='digital number'></setvalue>
+				<setvalue value = 'toa' label ='digital number'></setvalue>
+			</parameter>
+			
+			<parameter  paramid = 'scenenameform' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter  paramid = 'basenameform' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter  paramid = 'scenecompstr' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter  paramid = 'basecompstr' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter element = 'parameters' paramid = 'archive' paramtyp = 'Attr' tagorattr = 'Tag' required = 'N' defaultvalue = 'USGS' >
+				<setvalue value = 'USGScollL1v2016' label ='USGS Landsat collection L1 version 2016'></setvalue>
+			</parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid landsatbandtemplate (LandsatProc) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'landsatbandtemplate' version ='0.8.0' minuserstratum = '10'>
+			<title>Templates for identifying landsat band types</title>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='landsat' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'subtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'A'></parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>			
+			<parameter  paramid = 'filecat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'B'></parameter>
+			<parameter  paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			
+			<parameter  paramid = 'bandnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter  paramid = 'bandcat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'pattern' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'hdfgrid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter paramid = 'required' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Byte' >
+				<setvalue value = 'Byte' label ='Byte'></setvalue>
+				<setvalue value = 'Int16' label ='Int16'></setvalue>
+			</parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter  paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'SRFI' label ='reflectance'></setvalue>
+				<setvalue value = 'DN' label ='digital number'></setvalue>
+			</parameter>
+			<parameter  paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'fileext' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid landsatsupporttemplate (LandsatProc) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'landsatsupporttemplate' version ='0.8.0'  minuserstratum = '10'>
+
+			<title>Templates for identifying landsat support layers</title>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'subtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'A'></parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+			</parameter>
+			
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>			
+			<parameter  paramid = 'filecat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'S'></parameter>
+			<parameter  paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1'></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0'></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'pattern' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'hdfgrid' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter paramid = 'required' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'Byte' >
+				<setvalue value = 'Byte' label ='Byte'></setvalue>
+				<setvalue value = 'Int16' label ='Int16'></setvalue>
+			</parameter>
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'Y' defaultvalue = '0' >
+			</parameter>
+			<parameter  paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'SRFI' label ='reflectance'></setvalue>
+				<setvalue value = 'DN' label ='digital number'></setvalue>
+			</parameter>
+			<parameter  paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''>
+				<setvalue value = 'N' label ='nominal'></setvalue>
+				<setvalue value = 'O' label ='ordinal'></setvalue>
+				<setvalue value = 'I' label ='interval'></setvalue>
+				<setvalue value = 'R' label ='ratio'></setvalue>
+			</parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'fileext' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid landsatmetatemplate (LandsatProc) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='LandsatProc' subprocid = 'landsatmetatemplate' version ='0.8.0'  minuserstratum = '10'>
+
+			<title>Templates for identifying landsat meta data</title>
+		</parameters>
+		<system>
+			<procsys system = 'landsat' srcsystem='landsat' dstsystem='export' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = ''></parameter>
+			<parameter  paramid = 'subtype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'A'></parameter>
+			<parameter paramid = 'collcat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' >
+			</parameter>
+			<parameter  paramid = 'filecat' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'M'></parameter>
+			<parameter  paramid = 'proccat' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+
+			<parameter paramid = 'collnr' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>			
+			<parameter paramid = 'scalefac' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1'></parameter>
+			<parameter paramid = 'offsetadd' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0'></parameter>
+
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+
+			<parameter paramid = 'pattern' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'n' defaultvalue = 'metadata' ></parameter>
+			<parameter paramid = 'fileext' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'required' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter  paramid = 'dataunit' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'NA'>
+			</parameter>
+			<parameter  paramid = 'measure' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N'>
+			</parameter>
+			<parameter paramid = 'celltype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'text' >
+			<parameter paramid = 'cellnull' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+			</parameter>
+			</parameter>
+		</node>
+	</process>
+
+</LandsatProc>

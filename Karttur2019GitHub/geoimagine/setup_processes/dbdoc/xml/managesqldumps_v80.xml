@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	
+	<!-- Add rootprocid ManageRegion -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageSqlDumps'>	
+			<title>Manage sqldumps</title>
+			<label>Import sql dump to the database</label>
+		</parameters>
+	</process>
+			
+	<!-- Add subprocid exporttabledatacsvsql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>	
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'exporttabledatacsvsql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Exports data from a defined schema and table to csv file</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the scenes parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'csv' ></parameter>
+		</node>	
+	</process>
+
+		
+	<!-- Add subprocid copytabledatacsvsql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>	
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'copytabledatacsvsql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Imports data to a defined schema and table by copy - WARNING all data will be replaced</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'csv' ></parameter>
+		</node>	
+	</process>
+	
+		
+	<!-- Add subprocid exportalldatacsvsql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'exportalldatacsvsql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Dumps all tables within the db as csv files to use with COPY for refilling all tables</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<!-- the datum parameter is usually ignored, but can be set (otehrwise todays date is used)) -->
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>
+		
+	</process>
+	
+	<!-- Add subprocid copyalldatacsvsql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'copyalldatacsvsql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Copy csv dumps files to db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>
+		
+	</process>
+		
+		
+	<!-- Add subprocid dumptablesql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'dumptablesql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Dumps table db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<!-- the datum parameter is usually ignored, but can be set (otehrwise todays date is used)) -->
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+
+			<!-- /Library/PostgreSQL/9.1/bin -->
+			<parameter paramid = 'cmdpath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'format' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'p' ></parameter>
+			<parameter paramid = 'dataonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'schemaonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>	
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- Add subprocid dumpschemasql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'dumpschemasql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Dumps table db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<!-- the datum parameter is usually ignored, but can be set (otehrwise todays date is used)) -->
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- /Library/PostgreSQL/9.1/bin -->
+			<parameter paramid = 'cmdpath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'format' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'p' ></parameter>
+			<parameter paramid = 'dataonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'schemaonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- Add subprocid dumpdbsql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'dumpdbsql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Dumps table db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<!-- the datum parameter is usually ignored, but can be set (otehrwise todays date is used)) -->
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<!-- /Library/PostgreSQL/9.1/bin -->
+			<parameter paramid = 'cmdpath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'format' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'p' ></parameter>
+			<parameter paramid = 'dataonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'schemaonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>	
+	</process>
+	
+	
+	<!-- Add subprocid restoretablesql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'restoretablesql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Restore table db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+
+			<parameter paramid = 'datum' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+
+			<!-- /Library/PostgreSQL/9.1/bin -->
+			<parameter paramid = 'cmdpath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'dataonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'schemaonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>	
+	</process>
+	
+	
+	<!-- Add subprocid restoreschemasql (ManageSqlDumps) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		
+		<parameters rootprocid ='ManageSqlDumps' subprocid = 'restoreschemasql' version ='0.8.0'  minuserstratum = '10'>			
+			<title>Restore table db</title>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>	
+			<parameter paramid = 'schema' paramtyp = 'schema' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'table' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+
+			<!-- /Library/PostgreSQL/9.1/bin -->
+			<parameter paramid = 'cmdpath' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'None' ></parameter>
+			<parameter paramid = 'dataonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'schemaonly' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+		</node>	
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<!-- the hdrfiletype parameter is ignored, but must be in for completeness, not needed in parameter file) -->
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'sql' ></parameter>
+		</node>	
+	</process>
+
+			
+</manageprocess>	
+
+
+
+

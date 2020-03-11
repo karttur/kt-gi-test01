@@ -1,0 +1,663 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+
+	<!-- Add rootprocid TimeSeries -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeriesGraph'>		
+			<title>Timeseries analysis</title>
+			<label>Timeseries analysis</label>
+		</parameters>
+	</process>
+	
+	<!-- tsgraphancillary (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'tsgraphancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' >Not used at present</parameter>
+			<parameter paramid = 'mirrorlag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'maxlag' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >X coordinate</parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >Y coordinate</parameter>
+			
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' >Plot X axis label</parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' >Plot Y axis label</parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' >Plot title</parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >Plot grid</parameter>
+			
+			<!-- if the format parameters is set to anyhting but 0, it takes over the plot style of the value [style,color]-->
+			<parameter paramid = 'format' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >Plot feature formation string (2 letter code or '0')</parameter>
+			<parameter paramid = 'linewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'linestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'color' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'legend' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>				
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'xy'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'trendformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'trendcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+		</node>	
+	</process>
+		
+	<!-- plotdbtsclimate (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'plotdbtsclimate' version ='0.8.0'  minuserstratum = '1'>
+			<title>Plot time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'obslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'obslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>			
+			<parameter paramid = 'tendencylinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'tendencylinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>			
+			<parameter paramid = 'trendlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'trendlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>			
+			<parameter paramid = 'legend' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'separate' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'pdplot' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'decompose' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'plotoriginal' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'plottendency' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'plottrend' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			
+			<!-- https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html -->
+			<parameter paramid = 'alpha' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.8' ></parameter>
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'trendformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'trendcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- Add subprocid autocorrdbtsclimate (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'autocorrdbtsclimate' version ='0.8.0'  minuserstratum = '1'>
+			<title>Climate time-series autocorrelation, output i a graphical plot</title>
+		</parameters>
+		
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		
+		<node parent = 'process' element = 'parameters' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+
+			<parameter paramid = 'nlags' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'partial' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'resampleseasonal' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'mirror' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'width' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.8' ></parameter>
+			<parameter paramid = 'alpha' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '0.8' ></parameter>
+			<parameter paramid = 'errbars' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'linewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'linestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>			
+			<parameter paramid = 'legend' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			<parameter paramid = 'pdplot' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'prefilter' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'></alt>
+			</parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+						
+			<!-- https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html -->
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+		</node>
+
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'index'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'color' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'edgecolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- plotdbtsancillary (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'plotdbtsancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Plot time series graph</title>
+		</parameters>
+		<node parent = 'process' element = 'parameters'  required = 'Y' >
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			 
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<!-- if the format parameters is set to anyhting but 0, it takes over the plot style of the value [style,color]-->
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b-' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'g-' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'r-' ></parameter>
+			<parameter paramid = 'regressformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k-' ></parameter>
+			<parameter paramid = 'trendformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'y-' ></parameter>
+			
+			<parameter paramid = 'obslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'residuallinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'regresslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'trendlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'obslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'residuallinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'regresslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'trendlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'seasoncolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'residualcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'regresscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'trendcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			
+			<parameter paramid = 'legend' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+		<node parent = 'process' element = 'stats'>
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- componentdbtsgraphancillary (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'componentdbtsgraphancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+						
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			
+			<parameter paramid = 'sharey' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<!-- if the format parameters is set to anyhting but 0, it takes over the plot style of the value [style,color]-->
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b-' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'g-' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'r-' ></parameter>
+			<parameter paramid = 'regressformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k-' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'y-' ></parameter>
+			
+			<parameter paramid = 'obslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'residuallinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'regresslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'tendencylinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'obslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'residuallinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+
+			<parameter paramid = 'regresslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'tendencylinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+						
+			<parameter paramid = 'legend' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+
+		</node>
+
+		<node parent = 'process' element = 'index'>			
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'regressformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'seasoncolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'residualcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+			<parameter paramid = 'regresscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- componentcomptsgraphancillary (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'componentcomptsgraphancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+						
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			
+			<parameter paramid = 'sharey' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<!-- if the format parameters is set to anyhting but 0, it takes over the plot style of the value [style,color]-->
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b-' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'g-' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'r-' ></parameter>
+			<parameter paramid = 'regressformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k-' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'y-' ></parameter>
+			
+			<parameter paramid = 'obslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'residuallinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'regresslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'tendencylinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'obslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'residuallinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+
+			<parameter paramid = 'regresslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'tendencylinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+						
+			<parameter paramid = 'legend' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+		</node>
+		
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+
+		<node parent = 'process' element = 'xy'>			
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'regressformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'seasoncolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'residualcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+			<parameter paramid = 'regresscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+		</node>	
+	</process>
+	
+	<!-- indexcompxcrosstsgraphancillary (TimeSeriesGraph) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<system>
+			<procsys system = 'ancillary' srcsystem='ancillary' dstsystem='ancillary' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<parameters rootprocid ='TimeSeriesGraph' subprocid = 'indexcompxcrosstsgraphancillary' version ='0.8.0'  minuserstratum = '1'>
+			<title>Create time series graph</title>
+		</parameters>
+
+		<node parent = 'process' element = 'parameters'>
+			
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '1.3' ></parameter>
+			<parameter paramid = 'mirrorlag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'maxlag' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-1' ></parameter>
+
+			<parameter paramid = 'normalize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'></parameter>
+			<parameter paramid = 'standardize' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'></parameter>
+			<parameter paramid = 'naive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False'>
+				<alt True = 'naive' False='seasonal'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'additive' paramtyp = 'Boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True'>
+				<alt True = 'additive' False='multiplicative'>
+				</alt>
+			</parameter>
+			<parameter paramid = 'yearfac' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1' ></parameter>
+			<parameter paramid = 'trend' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'spline' ></parameter>
+			<parameter paramid = 'prefilterseason' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'kernel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'forceseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'abs' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+
+			<parameter paramid = 'xcrossobserved' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosstendency' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrosseason' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'xcrossresidual' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'xcrosspearson' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+			<parameter paramid = 'xcrosslag' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' ></parameter>
+
+			<parameter paramid = 'xlabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Date' ></parameter>
+			<parameter paramid = 'ylabel' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'none' ></parameter>
+			
+			<parameter paramid = 'sharey' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'title' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'Cross correlation' ></parameter>
+			<parameter paramid = 'grid' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			
+			<parameter paramid = 'lagplot' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >If true the time series are adjusted for the lag. Best done for single xy</parameter>
+			<!-- if the format parameters is set to anyhting but 0, it takes over the plot style of the value [style,color]-->
+						
+			<parameter paramid = 'obslinewidthindex' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidthindex' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'residuallinewidthindex' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'tendencylinewidthindex' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'obslinestyleindex' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'seasonlinestyleindex' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+			<parameter paramid = 'residuallinestyleindex' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>  
+			<parameter paramid = 'tendencylinestyleindex' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'solid' ></parameter>
+					
+			<parameter paramid = 'obslinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'seasonlinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'residuallinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+			<parameter paramid = 'tendencylinewidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '1.0' ></parameter>
+
+			<parameter paramid = 'obslinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>
+			<parameter paramid = 'seasonlinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>
+			<parameter paramid = 'residuallinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>  
+			<parameter paramid = 'tendencylinestyle' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'densely dotted' ></parameter>
+
+	
+			<parameter paramid = 'legend' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '-99' ></parameter>
+			
+			<parameter paramid = 'figwidth' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '8.0' ></parameter>
+			<parameter paramid = 'figheight' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '6.0' ></parameter>
+			<parameter paramid = 'fontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12.0' ></parameter>
+			<parameter paramid = 'legendfontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'titlefontsize' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '12' ></parameter>
+			<parameter paramid = 'figdpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '80' ></parameter>
+			<parameter paramid = 'savedpi' paramtyp = 'real' tagorattr = 'Attr' required = 'N' defaultvalue = '300' ></parameter>					
+		</node>
+		
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'png' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'srccomp'>
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>	
+
+		<node parent = 'process' element = 'xy'>			
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'epsg' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'x' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'y' paramtyp = 'real' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'seasoncolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'residualcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+		</node>	
+		
+		<node parent = 'process' element = 'index'>			
+			<parameter paramid = 'id' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'obsformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'seasonformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'residualformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'tendencyformat' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = '0' ></parameter>
+			<parameter paramid = 'obscolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'tendencycolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'seasoncolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'b' ></parameter>
+			<parameter paramid = 'residualcolor' paramtyp = 'string' tagorattr = 'Attr' required = 'N' defaultvalue = 'k' ></parameter>
+
+		</node>	
+	</process>
+		
+</manageprocess>

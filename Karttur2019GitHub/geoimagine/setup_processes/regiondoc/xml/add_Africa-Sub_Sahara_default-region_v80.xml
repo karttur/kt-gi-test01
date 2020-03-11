@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<specialdefaultregions>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<period timestep = 'static'></period>
+	
+	<!-- Add default region africasubsahara (Africa)-->
+	<process processid ='defaultregion'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters regioncat = 'subcontinent' regionid = 'africasubsahara' regionname = 'Africa South of Sahara'  parentid = 'africa' parentcat = 'continent' stratum = '4' 
+		minlon = '-16.0' minlat = '-35.2' maxlon = '52' maxlat = '9.9999' epsg = '4326' version = '1'
+			title='Sub-saharan Africa'
+			label='Africa South of the Sahara.'>
+		</parameters>
+		<dstpath volume = 'africa' ></dstpath>
+		<dstcomp>
+			<roi  measure = 'N' source = 'karttur' product = 'karttur'  band = 'roi' prefix = 'roi'></roi>
+		</dstcomp>
+	</process>
+</specialdefaultregions>

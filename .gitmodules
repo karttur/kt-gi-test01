@@ -5,9 +5,6 @@
 [submodule "Karttur2019GitHub/geoimagine/setup_db"]
 	path = Karttur2019GitHub/geoimagine/setup_db
 	url = https://github.com/karttur/geoimagine-setup_db
-[submodule "Karttur2019GitHub/geoimagine/setup_processes"]
-	path = Karttur2019GitHub/geoimagine/setup_processes
-	url = https://github.com/karttur/geoimagine-setup_processes
 [submodule "Karttur2019GitHub/geoimagine/dem"]
 	path = Karttur2019GitHub/geoimagine/dem
 	url = https://github.com/karttur/geoimagine-dem
@@ -104,3 +101,6 @@
 [submodule "Karttur2019GitHub/geoimagine/gdalutilities"]
 	path = Karttur2019GitHub/geoimagine/gdalutilities
 	url = https://github.com/karttur/geoimagine-gdalutilities
+[submodule "setup_processes"]
+	path = Karttur2019GitHub/geoimagine/setup_processes
+	url = https://github.com/karttur/geoimagine-setup_processes

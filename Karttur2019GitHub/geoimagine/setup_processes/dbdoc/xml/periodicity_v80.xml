@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+		
+	<!-- Add rootprocid Periodicity -->
+	<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='Periodicity'>		
+			<title>Process for period setting</title>
+			<label>Process for period setting</label>
+		</parameters>
+	</process>
+
+	<!-- Add subprocid periodicity (Periodicity) -->
+	<process processid ='addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters subprocid = 'periodicity' rootprocid ='Periodicity'  version ='0.8.0'  minuserstratum = '10'>		
+			<title>Sets the peridocity element tags</title>
+			<label>Sets the peridocity element tags</label>
+		</parameters>
+		
+		<node parent = 'process' element = 'period'>	
+			<parameter paramid = 'startyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '1900' ></parameter>
+			<parameter paramid = 'endyear' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '2100' ></parameter>
+			<parameter paramid = 'startmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' >
+				<minmax min = '1' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'endmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '12' >
+				<minmax min = '1' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'startday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '01' >
+				<minmax min = '1' max ='31'></minmax>
+			</parameter>
+			<parameter paramid = 'endday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '31' >
+				<minmax min = '1' max ='31'></minmax>
+			</parameter>			
+			<parameter paramid = 'seasonstartmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '1' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'seasonendmonth' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '1' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'seasonstartday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '1' max ='31'></minmax>
+			</parameter>
+			<parameter paramid = 'seasonendday' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '1' max ='31'></minmax>
+			</parameter>
+			<parameter paramid = 'addons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '0' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'maxdaysaddons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '0' max ='120'></minmax>
+			</parameter>
+			<parameter paramid = 'seasonalts' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			
+			<parameter paramid = 'averagets' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' >
+			</parameter>
+			
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'static' >
+				<setvalue value = 'static' label ='Static timestep'></setvalue>
+				<setvalue value = 'varying' label ='Varying timesteps'></setvalue>
+				<setvalue value = 'M' label ='Monthly timestep'></setvalue>
+				<setvalue value = 'A' label ='Annual timestep'></setvalue>
+				<setvalue value = '8D' label ='Every 8th day of year'></setvalue>
+				<setvalue value = '16D' label ='Every 16th day of year'></setvalue>
+			</parameter>
+		</node>
+		
+		<node parent = 'process' element = 'srcperiod'>			
+			<parameter paramid = 'addons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '0' max ='12'></minmax>
+			</parameter>
+			<parameter paramid = 'maxdaysaddons' paramtyp = 'integer' tagorattr = 'Attr' required = 'N' defaultvalue = '0' >
+				<minmax min = '0' max ='120'></minmax>
+			</parameter>
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'static' >
+				<setvalue value = 'static' label ='Static timestep'></setvalue>
+				<setvalue value = 'varying' label ='Varying timesteps'></setvalue>
+				<setvalue value = 'M' label ='Monthly timestep'></setvalue>
+				<setvalue value = 'A' label ='Annual timestep'></setvalue>
+				<setvalue value = '8D' label ='Every 8th day of year'></setvalue>
+				<setvalue value = '16D' label ='Every 16th day of year'></setvalue>
+			</parameter>
+		</node>
+		
+		<node parent = 'process' element = 'dstperiod'>	
+			<parameter paramid = 'timestep' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'static' >
+				<setvalue value = 'static' label ='Static timestep'></setvalue>
+				<setvalue value = 'varying' label ='Varying timesteps'></setvalue>
+				<setvalue value = 'M' label ='Monthly timestep'></setvalue>
+				<setvalue value = 'A' label ='Annual timestep'></setvalue>
+				<setvalue value = '8D' label ='Every 8th day of year'></setvalue>
+				<setvalue value = '16D' label ='Every 16th day of year'></setvalue>	
+			</parameter>
+		</node>
+	</process>
+</manageprocess>

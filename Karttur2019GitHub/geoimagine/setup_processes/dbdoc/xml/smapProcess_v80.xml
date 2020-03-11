@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>
+
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+	<path></path>
+	<process processid = 'addrootproc'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc'>
+			<title>Manage SMAP processes</title>
+			<label>Specific SMAP processes (order, download, organize)</label>
+		</parameters>
+	</process>
+
+	<!-- Add subrocid SearchSmapProducts (SMAPProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc' subprocid = 'SearchSmapProducts' version ='0.8.0' minuserstratum = '10'>
+			<title>Access available files in DAAC holding</title>
+			<label>Requires setup of wget and EarthData credentials file (called .netrc in user home path)</label>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'none' dstdivision='none'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'SPL3SMP_E' >
+				<setvalue value = 'MCD43A4' label ='MCD43A4'></setvalue>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '002' >
+				<setvalue value = '002' label ='002'></setvalue>
+			</parameter>
+			<parameter paramid = 'serverurl' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'https://n5eil01u.ecs.nsidc.org' >
+				<setvalue value = 'https://n5eil01u.ecs.nsidc.org' label ='https://n5eil01u.ecs.nsidc.org/'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid SmapSearchToDB (SMAPProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>N</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc' subprocid = 'SmapSearchToDB' version ='0.8.0' minuserstratum = '10'>
+			<title>Transfer the SMAP seanch results to the postgres DB</title>
+			<label>Transfer the SMAP seanch results to the postgres DB</label>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'remoteuser' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'SPL3SMP_E' >
+				<setvalue value = 'SPL3SMP_E' label ='SPL3SMP_E'></setvalue>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '006' >
+				<setvalue value = '002' label ='002'></setvalue>
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid DownLoadSmapDaac (SMAPProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc' subprocid = 'DownLoadSmapDaac' version ='0.8.0' minuserstratum = '10'>
+			<title>Download SMAP data from DAAC</title>
+			<label>Download SMAP data from DAAC</label>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'remoteuser' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'asscript' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'serverurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'https://n5eil01u.ecs.nsidc.org' >
+				<setvalue value = 'https://n5eil01u.ecs.nsidc.org' label ='https://n5eil01u.ecs.nsidc.org/'></setvalue>
+			</parameter>
+			<parameter paramid = 'downloaded' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'N' >
+			</parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = 'SPL3SMP_E' >
+				<setvalue value = 'SPL3SMP_E' label ='SPL3SMP_E'></setvalue>
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '002' >
+				<setvalue value = '002' label ='002'></setvalue>
+			</parameter>
+
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'hdf' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'hdf' ></parameter>
+		</node>
+	</process>
+
+	<!-- Add subrocid extractSmapHdf (SMAPProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc' subprocid = 'extractSmapHdf' version ='0.8.0' minuserstratum = '7'>
+			<title>Extracts the content of modis scenes></title>
+			<label>Scenes must be organized prior to extration</label>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'remoteuser' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'asscript' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+			<parameter paramid = 'serverurl' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'https://n5eil01u.ecs.nsidc.org' >
+				<setvalue value = 'https://n5eil01u.ecs.nsidc.org' label ='https://n5eil01u.ecs.nsidc.org/'></setvalue>
+			</parameter>
+
+			<parameter element = 'parameters' paramid = 'replaceold' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'True' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter element = 'parameters' paramid = 'redundant' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter element = 'parameters' paramid = 'exploded' paramtyp = 'bool' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'h5' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+
+	</process>
+
+	<!-- Add subrocid CheckSMAP (SMAPProc) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='SMAPProc' subprocid = 'CheckSMAP' version ='0.8.0' minuserstratum = '7'>
+			<title>Check SMAP download and extraction></title>
+			<label>Check SMAP download and extraction</label>
+		</parameters>
+		<system>
+			<procsys system = 'smap' srcsystem='smap' dstsystem='smap' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+			<parameter paramid = 'version' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' >
+			</parameter>
+		</node>
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'h5' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tif' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+
+</manageprocess>

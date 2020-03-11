@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manageprocess>	
+	<userproj userid = 'karttur' projectid = 'karttur' tractid= 'karttur' siteid = '*' plotid = '*' system = 'system'></userproj>
+
+<process processid = 'addrootproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageProject'>		
+			<title>Manage projects</title>
+			<label>Add, update, construct or delete projects</label>
+		</parameters>
+	</process>
+	
+	<!-- Add subrocid CreateDefRegProj (manageproject) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageProject' subprocid = 'ManageDefRegProj' version ='0.8.0' minuserstratum = '4'>
+			<title>Create project</title>
+			<label>Create a project and a default project tract based on a default region</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='system' dstsystem='system' srcdivision = 'NA' dstdivision='NA'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'defaultregion' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'modistileconstraint' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'land' ></parameter>
+
+			<parameter paramid = 'tractid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'tractname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'projid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'projname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'projtitle' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'projlabel' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'tracttitle' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'tractlabel' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+	</process>
+	
+	<!-- Add subrocid MangeTractProj (manageproject) -->
+	<process processid = 'addsubproc'>
+		<overwrite>Y</overwrite>
+		<delete>N</delete>
+		<parameters rootprocid ='ManageProject' subprocid = 'ManageTractProj' version ='0.8.0' minuserstratum = '4'>
+			<title>Create projec from tract</title>
+			<label>Create a project from a user tract</label>
+		</parameters>
+		<system>
+			<procsys system = 'system' srcsystem='ancillary' dstsystem='regions' srcdivision = 'region' dstdivision='region'></procsys>
+		</system>
+		<node parent = 'process' element = 'parameters'>
+			<parameter paramid = 'copycomp' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'tractproject' ></parameter>
+			<parameter paramid = 'defaultregion' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'modistileconstraint' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'land' ></parameter>
+
+			<parameter paramid = 'compid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'tractid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'tractname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = ''></parameter>
+			<parameter paramid = 'projid' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'projname' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'modtilelink' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'mgrstilelink' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'wrstilelink' paramtyp = 'boolean' tagorattr = 'Attr' required = 'N' defaultvalue = 'False' ></parameter>
+			<parameter paramid = 'projtitle' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'projlabel' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>	
+			<parameter paramid = 'tracttitle' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'tractlabel' paramtyp = 'text' tagorattr = 'Tag' required = 'Y' defaultvalue = '' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'srcpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'dstpath'>
+			<parameter paramid = 'volume' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '' ></parameter>
+			<parameter paramid = 'hdrfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'shp' ></parameter>
+			<parameter paramid = 'datfiletype' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+		</node>
+		
+		<node parent = 'process' element = 'srccomp'>	
+			<parameter paramid = '*' paramtyp = 'element' tagorattr = 'E' required = 'E' defaultvalue = '' ></parameter>
+			<parameter paramid = 'parent' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'process' ></parameter>
+			<parameter paramid = 'element' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '*' ></parameter>
+		</node>
+		
+		<node parent = 'srccomp' element = '*'>
+			<parameter paramid = 'source' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'product' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'folder' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'band' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'prefix' paramtyp = 'text' tagorattr = 'Attr' required = 'Y' defaultvalue = '*' ></parameter>
+			<parameter paramid = 'suffix' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = '' ></parameter>
+			<parameter paramid = 'system' paramtyp = 'text' tagorattr = 'Attr' required = 'N' defaultvalue = 'ancillary' ></parameter>
+		</node>
+	</process>
+		
+</manageprocess>	
+
+

@@ -1,0 +1,4 @@
+###### LANDSAT POSITIONS #####
+
+#'''Import Landsat scene positions - needed for linking scene positions to regions'''
+ancillary-import-USGS-WRS.xml

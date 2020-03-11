@@ -1,0 +1,3 @@
+##### Layout #####
+#defaultpalettes_vXX.xml installs the default palettes'''
+defaultpalettes_v80.xml
